@@ -7,7 +7,7 @@
     padding: 45px 200px 60px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .root {
         padding: 28px 19px 36px;
     }
