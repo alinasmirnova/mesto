@@ -5,6 +5,26 @@
     flex-direction: column;
     justify-content: center;
     padding: 45px 200px 60px;
+    font-family: Inter;
+    color: #fff;
+}
+
+@media (max-width: 1060px) {
+    .root {
+        padding: 45px 150px 60px;
+    }
+}
+
+@media (max-width: 970px) {
+    .root {
+        padding: 45px 100px 60px;
+    }
+}
+
+@media (max-width: 860px) {
+    .root {
+        padding: 45px 50px 60px;
+    }
 }
 
 @media (max-width: 768px) {
