@@ -1,12 +1,11 @@
 .profile {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
 @media (max-width: 768px) {
     .profile {
-        grid-template-columns: 1fr;
-        justify-items: center;
+        flex-direction: column;
     }
 }

@@ -4,7 +4,8 @@
     grid-template-rows: repeat(2, max-content);
     column-gap: 18px;
     row-gap: 16px;
-    align-items: center;    
+    align-items: center;
+    margin: 0 auto 0 30px;    
 }
 
 @media (max-width: 768px) {
@@ -12,6 +13,6 @@
         grid-template-columns: max-content max-content;
         row-gap: 14px;
         column-gap: 10px;
-        margin-bottom: 36px;
+        margin: 0 0 36px;
     }
 }
