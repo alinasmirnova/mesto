@@ -9,24 +9,6 @@
     color: #fff;
 }
 
-@media (max-width: 1080px) {
-    .root {
-        padding: 45px 150px 60px;
-    }
-}
-
-@media (max-width: 970px) {
-    .root {
-        padding: 45px 100px 60px;
-    }
-}
-
-@media (max-width: 860px) {
-    .root {
-        padding: 45px 50px 60px;
-    }
-}
-
 @media (max-width: 768px) {
     .root {
         padding: 28px 19px 36px;
