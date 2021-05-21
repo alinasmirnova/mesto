@@ -1,0 +1,15 @@
+.popup__text-field {
+    font-family: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 0 0 30px;
+    padding-bottom: 13px;
+}
+
+.popup__text-field:focus {
+    outline: none;
+}
