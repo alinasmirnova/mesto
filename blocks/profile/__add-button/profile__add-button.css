@@ -9,8 +9,16 @@
 @media (max-width: 768px) {
     .profile__add-button {
         width: 100%;
+        max-width: 581px;
         height: 50px;
         background-size: 16px;
         margin-left: 0;
     }
 }
+
+@media (max-width: 618px) {
+    .profile__add-button {
+        max-width: 282px;
+    }
+}
+
