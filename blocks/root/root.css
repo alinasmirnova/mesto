@@ -9,7 +9,7 @@
     color: #fff;
 }
 
-@media (max-width: 1060px) {
+@media (max-width: 1080px) {
     .root {
         padding: 45px 150px 60px;
     }
