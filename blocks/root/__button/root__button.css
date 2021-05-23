@@ -1,0 +1,14 @@
+.root__button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    border: 1px solid #fff;
+    transition: opacity 0.5s;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.root__button:hover {
+    opacity: 0.6;
+}
