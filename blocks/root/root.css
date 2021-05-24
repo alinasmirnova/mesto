@@ -4,13 +4,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 45px 200px 60px;
+    margin: 45px 200px 60px;
     font-family: Inter;
     color: #fff;
 }
 
 @media (max-width: 768px) {
     .root {
-        padding: 28px 19px 36px;
+        margin: 28px 19px 36px;
     }
 }
