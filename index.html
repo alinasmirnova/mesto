@@ -17,10 +17,10 @@
                 <img src="./images/avatar.jpg" class="profile__avatar" alt="Ваше фото">
                 <div class="profile__profile-info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
-                    <button class="profile__edit-button root__button" type="button" aria-label="Редактировать"></button>
+                    <button class="profile__edit-button root-button" type="button" aria-label="Редактировать"></button>
                     <p class="profile__about">Исследователь океана</p>                    
                 </div>
-                <button class="profile__add-button root__button" type="button" aria-label="Добавить место"></button>
+                <button class="profile__add-button root-button" type="button" aria-label="Добавить место"></button>
             </section>
             <section class="elements">
                 <article class="element">
@@ -68,13 +68,13 @@
             </section>
         </main>
         <footer class="footer">
-            <p class="footer__text">© 2021 Алина Смирнова</p>    
+            <p class="footer__text">&#169; 2021 Алина Смирнова</p>    
         </footer>
         <section class="popup">
-            <form class="popup__container">
+            <form class="popup__container" name="profile-info">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input type="text" name="name" class="popup__text-field" placeholder="Имя" required>
-                <input type="text" name="about" class="popup__text-field" placeholder="О себе">
+                <input type="text" name="name" class="popup__text-field popup__text-field_name_name" placeholder="Имя" required>
+                <input type="text" name="about" class="popup__text-field popup__text-field_name_about" placeholder="О себе">
                 <button class="popup__save-button" type="submit">Сохранить</button>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
             </form>

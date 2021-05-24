@@ -8,10 +8,11 @@
     background-color: transparent;
     background-position: center;
     border: 0;
+    transition: opacity 0.5s;
 }
 
 .popup__close-button:hover {
-    background-image: url(../../../images/close-icon-hover.svg);
+    opacity: 0.6;
 }
 
 @media (max-width: 616px) {
