@@ -4,6 +4,8 @@
     background-image: url('../../../images/add-button.svg');
     background-size: 22px;
     margin-left: 30px;
+    border-width: 2px;
+    border-radius: 2px;
 }
 
 @media (max-width: 768px) {
