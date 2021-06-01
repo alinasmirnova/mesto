@@ -1,14 +1,18 @@
-const editProfileButton = document.querySelector('.profile__edit-button');
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
-const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit);
-const namePopupField = document.querySelector('.popup__text-field_name_name');
-const aboutPopupField = document.querySelector('.popup__text-field_name_about');
+const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit, '.profile__edit-button', toggleProfileInfoPopup);
+const namePopupField = profileInfoPopup.querySelector('.popup__text-field_name_name');
+const aboutPopupField = profileInfoPopup.querySelector('.popup__text-field_name_about');
 
-function initPopup(type, onSubmit){
+const elementInfoPopup = initPopup('.popup_type_element-info', onAddElementFormSubmit, '.profile__add-button', toggleElementInfoPopup);
+const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
+const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
+
+function initPopup(type, onSubmit, buttonToOpen, onOpenPopup){
     const popup = document.querySelector(type);
     const closeButton = popup.querySelector('.popup__close-button');
-    const form = document.querySelector('.popup__container');
+    const form = popup.querySelector('.popup__container');
+    const openPopupButton = document.querySelector(buttonToOpen);
 
     function closePopup() {
         togglePopup(popup);
@@ -16,6 +20,7 @@ function initPopup(type, onSubmit){
 
     closeButton.addEventListener('click', closePopup);
     form.addEventListener('submit', onSubmit);
+    openPopupButton.addEventListener('click', onOpenPopup);
     return popup;
 }
 
@@ -23,6 +28,12 @@ function toggleProfileInfoPopup() {
     namePopupField.value = nameProfileField.textContent;
     aboutPopupField.value = aboutProfileField.textContent;
     togglePopup(profileInfoPopup);
+}
+
+function toggleElementInfoPopup() {    
+    togglePopup(elementInfoPopup);
+    placeNamePopupField.value = '';
+    placeLinkPopupField.value = '';
 }
 
 function togglePopup(popup) {    
@@ -36,7 +47,17 @@ function onEditProfileFormSubmit(evt) {
     togglePopup(profileInfoPopup);    
 }
 
-editProfileButton.addEventListener('click', toggleProfileInfoPopup);
+function onAddElementFormSubmit(evt) {
+    evt.preventDefault();
+    const place = {
+        name: placeNamePopupField.value,
+        link: placeLinkPopupField.value,
+    };
+    insertElements(createElement(place));
+    toggleElementInfoPopup();
+    placeNamePopupField.value = '';
+    placeLinkPopupField.value = '';
+}
 
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
@@ -50,7 +71,7 @@ function createElement({name, link}) {
     return element;
 }
 
-function insertElements(items) {
+function insertElements(...items) {
     elements.prepend(...items);
 }
 
@@ -83,5 +104,5 @@ const initialElements = [
 displayElements(initialElements);
 
 function displayElements(elements) {
-    insertElements(elements.map(e => createElement(e)));
+    insertElements(...elements.map(e => createElement(e)));
 }
