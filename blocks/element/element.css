@@ -4,5 +4,6 @@
     flex-direction: column;
     border-radius: 10px;
     overflow: hidden;
-    color: #000;    
+    color: #000;
+    position: relative;    
 }

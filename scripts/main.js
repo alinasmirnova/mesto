@@ -69,6 +69,7 @@ function createElement({name, link}) {
     image.alt = name;
     element.querySelector('.element__header').textContent = name;
     element.querySelector('.element__like').addEventListener('click', toggleLike);
+    element.querySelector('.element__delete').addEventListener('click', removeElement);
     return element;
 }
 
@@ -78,6 +79,11 @@ function insertElements(...items) {
 
 function toggleLike(evt){
     evt.target.classList.toggle('element__like_active');
+}
+
+function removeElement(evt) {
+    const elementToRemove = evt.target.closest('.element');
+    elementToRemove.remove();
 }
 
 const initialElements = [
