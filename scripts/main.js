@@ -68,11 +68,16 @@ function createElement({name, link}) {
     image.src = link;
     image.alt = name;
     element.querySelector('.element__header').textContent = name;
+    element.querySelector('.element__like').addEventListener('click', toggleLike);
     return element;
 }
 
 function insertElements(...items) {
     elements.prepend(...items);
+}
+
+function toggleLike(evt){
+    evt.target.classList.toggle('element__like_active');
 }
 
 const initialElements = [
