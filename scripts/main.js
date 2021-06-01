@@ -1,11 +1,23 @@
 const editProfileButton = document.querySelector('.profile__edit-button');
-const closePopupButton = document.querySelector('.popup__close-button');
-const profileInfoPopup = document.querySelector('.popup_type_profile-info');
-const namePopupField = document.querySelector('.popup__text-field_name_name');
-const aboutPopupField = document.querySelector('.popup__text-field_name_about');
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
-const editProfileForm = document.querySelector('.popup__container');
+const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit);
+const namePopupField = document.querySelector('.popup__text-field_name_name');
+const aboutPopupField = document.querySelector('.popup__text-field_name_about');
+
+function initPopup(type, onSubmit){
+    const popup = document.querySelector(type);
+    const closeButton = popup.querySelector('.popup__close-button');
+    const form = document.querySelector('.popup__container');
+
+    function closePopup() {
+        togglePopup(popup);
+    }
+
+    closeButton.addEventListener('click', closePopup);
+    form.addEventListener('submit', onSubmit);
+    return popup;
+}
 
 function toggleProfileInfoPopup() {
     namePopupField.value = nameProfileField.textContent;
@@ -17,17 +29,14 @@ function togglePopup(popup) {
     popup.classList.toggle('popup_opened');
 }
 
-editProfileButton.addEventListener('click', toggleProfileInfoPopup);
-closePopupButton.addEventListener('click', toggleProfileInfoPopup);
-
 function onEditProfileFormSubmit(evt) {
     evt.preventDefault();
     nameProfileField.textContent = namePopupField.value;
     aboutProfileField.textContent = aboutPopupField.value;
-    togglePopup();    
+    togglePopup(profileInfoPopup);    
 }
 
-editProfileForm.addEventListener('submit', onEditProfileFormSubmit);
+editProfileButton.addEventListener('click', toggleProfileInfoPopup);
 
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
