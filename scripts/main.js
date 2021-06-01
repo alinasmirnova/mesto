@@ -50,8 +50,8 @@ function createElement({name, link}) {
     return element;
 }
 
-function insertElement(element) {
-    elements.prepend(element);
+function insertElements(items) {
+    elements.prepend(...items);
 }
 
 const initialElements = [
@@ -83,7 +83,5 @@ const initialElements = [
 displayElements(initialElements);
 
 function displayElements(elements) {
-    for(let i = elements.length - 1; i >= 0; i--){
-        insertElement(createElement(elements[i]));
-    }
+    insertElements(elements.map(e => createElement(e)));
 }
