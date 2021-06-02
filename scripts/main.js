@@ -1,24 +1,22 @@
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
-const profileInfoPopup = initPopup('.popup_type_profile-info', '.profile__edit-button', toggleProfileInfoPopup, onEditProfileFormSubmit);
+const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit);
 const namePopupField = profileInfoPopup.querySelector('.popup__text-field_name_name');
 const aboutPopupField = profileInfoPopup.querySelector('.popup__text-field_name_about');
 
-const elementInfoPopup = initPopup('.popup_type_element-info', '.profile__add-button', toggleElementInfoPopup, onAddElementFormSubmit);
+const elementInfoPopup = initPopup('.popup_type_element-info', onAddElementFormSubmit);
 const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
 const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
 
-function initPopup(type, buttonToOpen, onOpenPopup, onSubmit){
+function initPopup(type, onSubmit){
     const popup = document.querySelector(type);
-    const closeButton = popup.querySelector('.popup__close-button');
-    const openPopupButton = document.querySelector(buttonToOpen);
+    const closeButton = popup.querySelector('.popup__close-button');    
 
     function closePopup() {
         togglePopup(popup);
     }
 
     closeButton.addEventListener('click', closePopup);    
-    openPopupButton.addEventListener('click', onOpenPopup);
 
     if (onSubmit) {
         const form = popup.querySelector('.popup__container');
@@ -62,6 +60,14 @@ function onAddElementFormSubmit(evt) {
     placeNamePopupField.value = '';
     placeLinkPopupField.value = '';
 }
+
+function addOnClickAction(selector, onClick) {
+    const editProfileButton = document.querySelector(selector);
+    editProfileButton.addEventListener('click', onClick);
+}
+
+addOnClickAction('.profile__edit-button', toggleProfileInfoPopup);
+addOnClickAction('.profile__add-button', toggleElementInfoPopup);
 
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
