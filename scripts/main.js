@@ -75,8 +75,7 @@ const elementTemplate = document.querySelector('#element-template').content;
 function createElement({name, link}) {
     const element = elementTemplate.querySelector('.element').cloneNode(true);
     let image = element.querySelector('.element__image');
-    image.src = link;
-    image.alt = name;
+    image.style.backgroundImage = `url('${link}')`;
     element.querySelector('.element__header').textContent = name;
     element.querySelector('.element__like').addEventListener('click', toggleLike);
     element.querySelector('.element__delete').addEventListener('click', removeElement);
