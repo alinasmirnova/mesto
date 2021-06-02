@@ -1,26 +1,30 @@
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
-const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit, '.profile__edit-button', toggleProfileInfoPopup);
+const profileInfoPopup = initPopup('.popup_type_profile-info', '.profile__edit-button', toggleProfileInfoPopup, onEditProfileFormSubmit);
 const namePopupField = profileInfoPopup.querySelector('.popup__text-field_name_name');
 const aboutPopupField = profileInfoPopup.querySelector('.popup__text-field_name_about');
 
-const elementInfoPopup = initPopup('.popup_type_element-info', onAddElementFormSubmit, '.profile__add-button', toggleElementInfoPopup);
+const elementInfoPopup = initPopup('.popup_type_element-info', '.profile__add-button', toggleElementInfoPopup, onAddElementFormSubmit);
 const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
 const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
 
-function initPopup(type, onSubmit, buttonToOpen, onOpenPopup){
+function initPopup(type, buttonToOpen, onOpenPopup, onSubmit){
     const popup = document.querySelector(type);
     const closeButton = popup.querySelector('.popup__close-button');
-    const form = popup.querySelector('.popup__container');
     const openPopupButton = document.querySelector(buttonToOpen);
 
     function closePopup() {
         togglePopup(popup);
     }
 
-    closeButton.addEventListener('click', closePopup);
-    form.addEventListener('submit', onSubmit);
+    closeButton.addEventListener('click', closePopup);    
     openPopupButton.addEventListener('click', onOpenPopup);
+
+    if (onSubmit) {
+        const form = popup.querySelector('.popup__container');
+        form.addEventListener('submit', onSubmit);
+    }
+
     return popup;
 }
 
