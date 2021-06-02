@@ -8,6 +8,10 @@ const elementInfoPopup = initPopup('.popup_type_element-info', onAddElementFormS
 const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
 const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
 
+const previewPopup = initPopup('.popup_type_element-preview');
+const previewImage = previewPopup.querySelector('.preview__image');
+const previewTitle = previewPopup.querySelector('.preview__title');
+
 function initPopup(type, onSubmit){
     const popup = document.querySelector(type);
     const closeButton = popup.querySelector('.popup__close-button');    
@@ -36,6 +40,15 @@ function toggleElementInfoPopup() {
     togglePopup(elementInfoPopup);
     placeNamePopupField.value = '';
     placeLinkPopupField.value = '';
+}
+
+function toggleElementPreviewPopup(evt) {
+    const element = evt.target.closest('.element');
+    const title = element.querySelector('.element__header').textContent;
+    previewTitle.textContent = title;
+    previewImage.src = evt.target.style.backgroundImage.split('"')[1];
+    previewImage.alt = title;
+    togglePopup(previewPopup);
 }
 
 function togglePopup(popup) {    
@@ -74,11 +87,12 @@ const elementTemplate = document.querySelector('#element-template').content;
 
 function createElement({name, link}) {
     const element = elementTemplate.querySelector('.element').cloneNode(true);
-    let image = element.querySelector('.element__image');
+    const image = element.querySelector('.element__image');
     image.style.backgroundImage = `url('${link}')`;
     element.querySelector('.element__header').textContent = name;
     element.querySelector('.element__like').addEventListener('click', toggleLike);
     element.querySelector('.element__delete').addEventListener('click', removeElement);
+    image.addEventListener('click', toggleElementPreviewPopup)
     return element;
 }
 
