@@ -2,5 +2,7 @@
     width: 282px;
     height: 282px;
     border: 0;
-    cursor: pointer;    
+    cursor: pointer;
+    background-size: cover; 
+    background-repeat: no-repeat;   
 }
