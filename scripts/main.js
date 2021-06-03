@@ -51,12 +51,10 @@ function openElementInfoPopup() {
     openPopup(elementInfoPopup);
 }
 
-function openElementPreviewPopup(evt) {
-    const element = evt.target.closest('.element');
-    const title = element.querySelector('.element__header').textContent;
-    previewTitle.textContent = title;
-    previewImage.src = evt.target.style.backgroundImage.split('"')[1];
-    previewImage.alt = title;
+function openElementPreviewPopup(name, link) {
+    previewTitle.textContent = name;
+    previewImage.src = link;
+    previewImage.alt = name;
     openPopup(previewPopup);
 }
 
@@ -95,7 +93,7 @@ function createElement({name, link}) {
     element.querySelector('.element__header').textContent = name;
     element.querySelector('.element__like').addEventListener('click', toggleLike);
     element.querySelector('.element__delete').addEventListener('click', removeElement);
-    image.addEventListener('click', openElementPreviewPopup)
+    image.addEventListener('click', () => openElementPreviewPopup(name, link))
     return element;
 }
 
