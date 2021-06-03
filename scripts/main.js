@@ -106,8 +106,7 @@ function toggleLike(evt){
 }
 
 function removeElement(evt) {
-    const elementToRemove = evt.target.closest('.element');
-    elementToRemove.remove();
+    evt.target.closest('.element').remove();
 }
 
 const initialElements = [
