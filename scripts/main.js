@@ -1,14 +1,16 @@
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
-const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit);
+const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit).popup;
 const namePopupField = profileInfoPopup.querySelector('.popup__text-field_name_name');
 const aboutPopupField = profileInfoPopup.querySelector('.popup__text-field_name_about');
 
-const elementInfoPopup = initPopup('.popup_type_element-info', onAddElementFormSubmit);
+const elementInfo = initPopup('.popup_type_element-info', onAddElementFormSubmit);
+const elementInfoPopup = elementInfo.popup;
+const elementInfoForm = elementInfo.form;
 const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
 const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
 
-const previewPopup = initPopup('.popup_type_element-preview');
+const previewPopup = initPopup('.popup_type_element-preview').popup;
 const previewImage = previewPopup.querySelector('.preview__image');
 const previewTitle = previewPopup.querySelector('.preview__title');
 
@@ -17,13 +19,13 @@ function initPopup(type, onSubmit){
     const closeButton = popup.querySelector('.popup__close-button');    
 
     closeButton.addEventListener('click', () => togglePopup(popup));    
-
+    let form;
     if (onSubmit) {
-        const form = popup.querySelector('.popup__container');
+        form = popup.querySelector('.popup__container');
         form.addEventListener('submit', onSubmit);
     }
 
-    return popup;
+    return {popup, form};
 }
 
 function openProfileInfoPopup() {
@@ -34,8 +36,7 @@ function openProfileInfoPopup() {
 
 function toggleElementInfoPopup() {    
     togglePopup(elementInfoPopup);
-    placeNamePopupField.value = '';
-    placeLinkPopupField.value = '';
+    elementInfoForm.reset();
 }
 
 function toggleElementPreviewPopup(evt) {
@@ -66,8 +67,7 @@ function onAddElementFormSubmit(evt) {
     };
     insertElements(createElement(place));
     toggleElementInfoPopup();
-    placeNamePopupField.value = '';
-    placeLinkPopupField.value = '';
+    elementInfoForm.reset();
 }
 
 function addOnClickAction(selector, onClick) {
