@@ -12,6 +12,9 @@ const previewPopup = initPopup('.popup_type_element-preview');
 const previewImage = previewPopup.popup.querySelector('.preview__image');
 const previewTitle = previewPopup.popup.querySelector('.preview__title');
 
+const elements = document.querySelector('.elements');
+const elementTemplate = document.querySelector('#element-template').content;
+
 const openPopupClass = 'popup_opened';
 function openPopup({popup}) {
     if (!popup.classList.contains(openPopupClass)) {
@@ -80,12 +83,6 @@ function addOnClickAction(selector, onClick) {
     editProfileButton.addEventListener('click', onClick);
 }
 
-addOnClickAction('.profile__edit-button', openProfileInfoPopup);
-addOnClickAction('.profile__add-button', openElementInfoPopup);
-
-const elements = document.querySelector('.elements');
-const elementTemplate = document.querySelector('#element-template').content;
-
 function createElement({name, link}) {
     const element = elementTemplate.querySelector('.element').cloneNode(true);
     const image = element.querySelector('.element__image');
@@ -108,6 +105,13 @@ function toggleLike(evt){
 function removeElement(evt) {
     evt.target.closest('.element').remove();
 }
+
+function displayElements(elements) {
+    insertElements(...elements.map(e => createElement(e)));
+}
+
+addOnClickAction('.profile__edit-button', openProfileInfoPopup);
+addOnClickAction('.profile__add-button', openElementInfoPopup);
 
 const initialElements = [
     {
@@ -136,7 +140,3 @@ const initialElements = [
     }
 ];
 displayElements(initialElements);
-
-function displayElements(elements) {
-    insertElements(...elements.map(e => createElement(e)));
-}
