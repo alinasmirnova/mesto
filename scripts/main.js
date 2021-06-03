@@ -16,11 +16,7 @@ function initPopup(type, onSubmit){
     const popup = document.querySelector(type);
     const closeButton = popup.querySelector('.popup__close-button');    
 
-    function closePopup() {
-        togglePopup(popup);
-    }
-
-    closeButton.addEventListener('click', closePopup);    
+    closeButton.addEventListener('click', () => togglePopup(popup));    
 
     if (onSubmit) {
         const form = popup.querySelector('.popup__container');
