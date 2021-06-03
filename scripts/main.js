@@ -26,7 +26,7 @@ function initPopup(type, onSubmit){
     return popup;
 }
 
-function toggleProfileInfoPopup() {
+function openProfileInfoPopup() {
     namePopupField.value = nameProfileField.textContent;
     aboutPopupField.value = aboutProfileField.textContent;
     togglePopup(profileInfoPopup);
@@ -75,7 +75,7 @@ function addOnClickAction(selector, onClick) {
     editProfileButton.addEventListener('click', onClick);
 }
 
-addOnClickAction('.profile__edit-button', toggleProfileInfoPopup);
+addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', toggleElementInfoPopup);
 
 const elements = document.querySelector('.elements');
