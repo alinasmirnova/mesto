@@ -1,29 +1,42 @@
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
-const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit).popup;
-const namePopupField = profileInfoPopup.querySelector('.popup__text-field_name_name');
-const aboutPopupField = profileInfoPopup.querySelector('.popup__text-field_name_about');
+const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit);
+const namePopupField = profileInfoPopup.form.querySelector('.popup__text-field_name_name');
+const aboutPopupField = profileInfoPopup.form.querySelector('.popup__text-field_name_about');
 
-const elementInfo = initPopup('.popup_type_element-info', onAddElementFormSubmit);
-const elementInfoPopup = elementInfo.popup;
-const elementInfoForm = elementInfo.form;
-const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
-const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
+const elementInfoPopup = initPopup('.popup_type_element-info', onAddElementFormSubmit);
+const placeNamePopupField = elementInfoPopup.form.querySelector('.popup__text-field_name_name');
+const placeLinkPopupField = elementInfoPopup.form.querySelector('.popup__text-field_name_link');
 
-const previewPopup = initPopup('.popup_type_element-preview').popup;
-const previewImage = previewPopup.querySelector('.preview__image');
-const previewTitle = previewPopup.querySelector('.preview__title');
+const previewPopup = initPopup('.popup_type_element-preview');
+const previewImage = previewPopup.popup.querySelector('.preview__image');
+const previewTitle = previewPopup.popup.querySelector('.preview__title');
+
+const openPopupClass = 'popup_opened';
+function openPopup({popup}) {
+    if (!popup.classList.contains(openPopupClass)) {
+        popup.classList.add(openPopupClass);
+    }
+}
+
+function closePopup({popup, form}) {
+    popup.classList.remove(openPopupClass);
+    if (form) {
+        form.reset();
+    }
+}
 
 function initPopup(type, onSubmit){
     const popup = document.querySelector(type);
     const closeButton = popup.querySelector('.popup__close-button');    
 
-    closeButton.addEventListener('click', () => togglePopup(popup));    
     let form;
     if (onSubmit) {
         form = popup.querySelector('.popup__container');
         form.addEventListener('submit', onSubmit);
     }
+
+    closeButton.addEventListener('click', () => closePopup({popup, form}));
 
     return {popup, form};
 }
@@ -31,32 +44,27 @@ function initPopup(type, onSubmit){
 function openProfileInfoPopup() {
     namePopupField.value = nameProfileField.textContent;
     aboutPopupField.value = aboutProfileField.textContent;
-    togglePopup(profileInfoPopup);
+    openPopup(profileInfoPopup);
 }
 
-function toggleElementInfoPopup() {    
-    togglePopup(elementInfoPopup);
-    elementInfoForm.reset();
+function openElementInfoPopup() { 
+    openPopup(elementInfoPopup);
 }
 
-function toggleElementPreviewPopup(evt) {
+function openElementPreviewPopup(evt) {
     const element = evt.target.closest('.element');
     const title = element.querySelector('.element__header').textContent;
     previewTitle.textContent = title;
     previewImage.src = evt.target.style.backgroundImage.split('"')[1];
     previewImage.alt = title;
-    togglePopup(previewPopup);
-}
-
-function togglePopup(popup) {    
-    popup.classList.toggle('popup_opened');
+    openPopup(previewPopup);
 }
 
 function onEditProfileFormSubmit(evt) {
     evt.preventDefault();
     nameProfileField.textContent = namePopupField.value;
     aboutProfileField.textContent = aboutPopupField.value;
-    togglePopup(profileInfoPopup);    
+    closePopup(profileInfoPopup);    
 }
 
 function onAddElementFormSubmit(evt) {
@@ -66,8 +74,7 @@ function onAddElementFormSubmit(evt) {
         link: placeLinkPopupField.value,
     };
     insertElements(createElement(place));
-    toggleElementInfoPopup();
-    elementInfoForm.reset();
+    closePopup(elementInfoPopup);
 }
 
 function addOnClickAction(selector, onClick) {
@@ -76,7 +83,7 @@ function addOnClickAction(selector, onClick) {
 }
 
 addOnClickAction('.profile__edit-button', openProfileInfoPopup);
-addOnClickAction('.profile__add-button', toggleElementInfoPopup);
+addOnClickAction('.profile__add-button', openElementInfoPopup);
 
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
@@ -88,7 +95,7 @@ function createElement({name, link}) {
     element.querySelector('.element__header').textContent = name;
     element.querySelector('.element__like').addEventListener('click', toggleLike);
     element.querySelector('.element__delete').addEventListener('click', removeElement);
-    image.addEventListener('click', toggleElementPreviewPopup)
+    image.addEventListener('click', openElementPreviewPopup)
     return element;
 }
 
