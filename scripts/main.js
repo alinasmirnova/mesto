@@ -1,47 +1,44 @@
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
 const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit);
-const namePopupField = profileInfoPopup.form.querySelector('.popup__text-field_name_name');
-const aboutPopupField = profileInfoPopup.form.querySelector('.popup__text-field_name_about');
+const namePopupField = profileInfoPopup.querySelector('.popup__text-field_name_name');
+const aboutPopupField = profileInfoPopup.querySelector('.popup__text-field_name_about');
 
 const elementInfoPopup = initPopup('.popup_type_element-info', onAddElementFormSubmit);
-const placeNamePopupField = elementInfoPopup.form.querySelector('.popup__text-field_name_name');
-const placeLinkPopupField = elementInfoPopup.form.querySelector('.popup__text-field_name_link');
+const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
+const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
+const addElementForm = elementInfoPopup.querySelector('.popup__container');
 
 const previewPopup = initPopup('.popup_type_element-preview');
-const previewImage = previewPopup.popup.querySelector('.preview__image');
-const previewTitle = previewPopup.popup.querySelector('.preview__title');
+const previewImage = previewPopup.querySelector('.preview__image');
+const previewTitle = previewPopup.querySelector('.preview__title');
 
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
 
 const openPopupClass = 'popup_opened';
-function openPopup({popup}) {
+function openPopup(popup) {
     if (!popup.classList.contains(openPopupClass)) {
         popup.classList.add(openPopupClass);
     }
 }
 
-function closePopup({popup, form}) {
-    popup.classList.remove(openPopupClass);
-    if (form) {
-        form.reset();
-    }
+function closePopup(popup) {
+    popup.classList.remove(openPopupClass);    
 }
 
 function initPopup(type, onSubmit){
     const popup = document.querySelector(type);
     const closeButton = popup.querySelector('.popup__close-button');    
 
-    let form;
     if (onSubmit) {
-        form = popup.querySelector('.popup__container');
+        const form = popup.querySelector('.popup__container');
         form.addEventListener('submit', onSubmit);
     }
 
-    closeButton.addEventListener('click', () => closePopup({popup, form}));
+    closeButton.addEventListener('click', () => closePopup(popup));
 
-    return {popup, form};
+    return popup;
 }
 
 function openProfileInfoPopup() {
@@ -50,7 +47,8 @@ function openProfileInfoPopup() {
     openPopup(profileInfoPopup);
 }
 
-function openElementInfoPopup() { 
+function openElementInfoPopup() {
+    addElementForm.reset();
     openPopup(elementInfoPopup);
 }
 
@@ -76,6 +74,7 @@ function onAddElementFormSubmit(evt) {
     };
     insertElements(createElement(place));
     closePopup(elementInfoPopup);
+    addElementForm.reset();   
 }
 
 function addOnClickAction(selector, onClick) {
