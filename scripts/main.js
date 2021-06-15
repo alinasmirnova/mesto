@@ -1,10 +1,10 @@
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
-const profileInfoPopup = initPopup('.popup_type_profile-info', onEditProfileFormSubmit);
+const profileInfoPopup = initPopup('.popup_type_profile-info');
 const namePopupField = profileInfoPopup.querySelector('.popup__text-field_name_name');
 const aboutPopupField = profileInfoPopup.querySelector('.popup__text-field_name_about');
 
-const elementInfoPopup = initPopup('.popup_type_element-info', onAddElementFormSubmit);
+const elementInfoPopup = initPopup('.popup_type_element-info');
 const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
 const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
 const addElementForm = elementInfoPopup.querySelector('.popup__container');
@@ -27,18 +27,18 @@ function closePopup(popup) {
     popup.classList.remove(openPopupClass);    
 }
 
-function initPopup(type, onSubmit){
+function initPopup(type){
     const popup = document.querySelector(type);
     const closeButton = popup.querySelector('.popup__close-button');    
-
-    if (onSubmit) {
-        const form = popup.querySelector('.popup__container');
-        form.addEventListener('submit', onSubmit);
-    }
-
     closeButton.addEventListener('click', () => closePopup(popup));
-
     return popup;
+}
+
+function initForm(form, onSubmit) {
+    form.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        onSubmit();
+    });
 }
 
 function openProfileInfoPopup() {
@@ -60,14 +60,12 @@ function openElementPreviewPopup(name, link) {
 }
 
 function onEditProfileFormSubmit(evt) {
-    evt.preventDefault();
     nameProfileField.textContent = namePopupField.value;
     aboutProfileField.textContent = aboutPopupField.value;
     closePopup(profileInfoPopup);    
 }
 
 function onAddElementFormSubmit(evt) {
-    evt.preventDefault();
     const place = {
         name: placeNamePopupField.value,
         link: placeLinkPopupField.value,
@@ -108,6 +106,9 @@ function removeElement(evt) {
 function displayElements(elements) {
     insertElements(...elements.map(e => createElement(e)));
 }
+
+initForm(document.forms['profile-info'], onEditProfileFormSubmit);
+initForm(document.forms['add-element'], onAddElementFormSubmit);
 
 addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', openElementInfoPopup);
