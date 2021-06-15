@@ -1,13 +1,14 @@
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
 const profileInfoPopup = initPopup('.popup_type_profile-info');
-const namePopupField = profileInfoPopup.querySelector('.popup__text-field_name_name');
-const aboutPopupField = profileInfoPopup.querySelector('.popup__text-field_name_about');
+const profileInfoForm = document.forms['profile-info'];
+const namePopupField = profileInfoForm.elements.name;
+const aboutPopupField = profileInfoForm.elements.about;
 
 const elementInfoPopup = initPopup('.popup_type_element-info');
-const placeNamePopupField = elementInfoPopup.querySelector('.popup__text-field_name_name');
-const placeLinkPopupField = elementInfoPopup.querySelector('.popup__text-field_name_link');
-const addElementForm = elementInfoPopup.querySelector('.popup__container');
+const addElementForm = document.forms['add-element'];
+const placeNamePopupField = addElementForm.elements.name;
+const placeLinkPopupField = addElementForm.elements.link;
 
 const previewPopup = initPopup('.popup_type_element-preview');
 const previewImage = previewPopup.querySelector('.preview__image');
