@@ -31,8 +31,8 @@
         <section class="popup popup_type_profile-info">
             <form class="popup__container" name="profile-info">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input type="text" name="name" class="popup__text-field popup__text-field_name_name" placeholder="Имя" required>
-                <input type="text" name="about" class="popup__text-field popup__text-field_name_about" placeholder="О себе">
+                <input type="text" name="name" class="popup__text-field popup__text-field_name_name" placeholder="Имя" minlength="2" maxlength="40" required>
+                <input type="text" name="about" class="popup__text-field popup__text-field_name_about" placeholder="О себе" minlength="2" maxlength="200" required>
                 <button class="popup__save-button" type="submit">Сохранить</button>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
             </form>
@@ -40,7 +40,7 @@
         <section class="popup popup_type_element-info">
             <form class="popup__container" name="add-element">
                 <h2 class="popup__title">Новое место</h2>
-                <input type="text" name="name" class="popup__text-field popup__text-field_name_name" placeholder="Название" required>
+                <input type="text" name="name" class="popup__text-field popup__text-field_name_name" placeholder="Название" minlength="2" maxlength="30" required>
                 <input type="url" name="link" class="popup__text-field popup__text-field_name_link" placeholder="Ссылка на картинку" required>
                 <button class="popup__save-button" type="submit">Создать</button>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
