@@ -42,10 +42,7 @@ function getValidationMessage(input) {
         return 'Вы пропустили это поле';
 
     if (input.validity.typeMismatch && input.type === 'url')
-        return 'Введите адрес сайта';
-
-    if (input.validity.tooShort)
-        return 'Строка должна быть не короче 2 символов';
+        return 'Введите адрес сайта';    
     
     return input.validationMessage;
 }
