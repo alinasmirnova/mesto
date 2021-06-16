@@ -118,7 +118,9 @@ enableValidation({
     formSelector: '.form',
     inputSelector: '.form__input',
     inputErrorClass: 'form__input_invalid',
-    errorClass: 'form__input-error_visible'
+    errorClass: 'form__input-error_visible',
+    submitButtonSelector: '.popup__save-button',
+    inactiveButtonClass: 'popup__save-button_disabled'
 });
 
 const initialElements = [

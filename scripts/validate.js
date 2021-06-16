@@ -5,9 +5,11 @@ function enableValidation(settings) {
 
 function addValiidations(form, settings) {
     const inputs = Array.from(form.querySelectorAll(settings.inputSelector));
+    const button = form.querySelector(settings.submitButtonSelector);
     inputs.forEach(input => {
         input.addEventListener('input', (evt) => {
             checkValidity(input, form, settings);
+            updateSubmitButtonState(inputs, button, settings);
         });
     });
 }
@@ -45,4 +47,18 @@ function getValidationMessage(input) {
         return 'Строка должна быть не короче 2 символов';
     
     return input.validationMessage;
+}
+
+function hasErrors(inputs) {
+    return inputs.some(input => !input.validity.valid);
+}
+
+function updateSubmitButtonState(inputs, button, {inactiveButtonClass}) {
+    if (hasErrors(inputs)){
+        button.classList.add(inactiveButtonClass);
+    }
+    else {
+        button.classList.remove(inactiveButtonClass);
+    }
+
 }
