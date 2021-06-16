@@ -51,21 +51,13 @@ function hasErrors(inputs) {
     return inputs.some(input => !input.validity.valid);
 }
 
-function updateSubmitButtonState(inputs, button, settings) {
+function updateSubmitButtonState(inputs, button, {inactiveButtonClass}) {
     if (hasErrors(inputs)){
-        disable(button, settings);
+        button.classList.add(inactiveButtonClass);
     }
     else {
-        enable(button, settings);
+        button.classList.remove(inactiveButtonClass);
     }
-}
-
-function enable(button, {inactiveButtonClass}) {
-    button.classList.remove(inactiveButtonClass);
-}
-
-function disable(button, {inactiveButtonClass}) {
-    button.classList.add(inactiveButtonClass);
 }
 
 function clearValidations(form, settings) {
@@ -73,5 +65,5 @@ function clearValidations(form, settings) {
     const inputs = Array.from(form.querySelectorAll(settings.inputSelector));
 
     inputs.forEach(input => hideError(input, form, settings));
-    enable(button, settings);    
+    updateSubmitButtonState(inputs, button, settings);    
 }
