@@ -41,6 +41,11 @@ function initPopup(type){
     const popup = document.querySelector(type);
     const closeButton = popup.querySelector('.popup__close-button');    
     closeButton.addEventListener('click', () => closePopup(popup));
+    
+    const popupContent = popup.querySelector('.popup__content');
+    popupContent.addEventListener('click', evt => evt.stopPropagation());
+    popup.addEventListener('click', () => closePopup(popup));
+
     return popup;
 }
 
