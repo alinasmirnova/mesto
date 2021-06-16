@@ -17,9 +17,18 @@ const previewTitle = previewPopup.querySelector('.preview__title');
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
 
+const validationSettings = {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    inputErrorClass: 'form__input_invalid',
+    errorClass: 'form__input-error_visible',
+    submitButtonSelector: '.popup__save-button',
+    inactiveButtonClass: 'popup__save-button_disabled'
+};
+
 const openPopupClass = 'popup_opened';
 function openPopup(popup) {
-    if (!popup.classList.contains(openPopupClass)) {
+    if (!popup.classList.contains(openPopupClass)) {        
         popup.classList.add(openPopupClass);
     }
 }
@@ -45,11 +54,13 @@ function initForm(form, onSubmit) {
 function openProfileInfoPopup() {
     namePopupField.value = nameProfileField.textContent;
     aboutPopupField.value = aboutProfileField.textContent;
+    clearValidations(profileInfoForm, validationSettings);
     openPopup(profileInfoPopup);
 }
 
 function openElementInfoPopup() {
     addElementForm.reset();
+    clearValidations(addElementForm, validationSettings);
     openPopup(elementInfoPopup);
 }
 
@@ -114,14 +125,7 @@ initForm(addElementForm, onAddElementFormSubmit);
 addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', openElementInfoPopup);
 
-enableValidation({
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    inputErrorClass: 'form__input_invalid',
-    errorClass: 'form__input-error_visible',
-    submitButtonSelector: '.popup__save-button',
-    inactiveButtonClass: 'popup__save-button_disabled'
-});
+enableValidation(validationSettings);
 
 const initialElements = [
     {

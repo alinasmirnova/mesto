@@ -15,22 +15,23 @@ function addValiidations(form, settings) {
 }
 
 function checkValidity(input, form, settings) {
-    const inputError = form.querySelector(`.${input.id}-error`);    
     if (input.validity.valid) {
-        hideError(input, inputError, settings);
+        hideError(input, form, settings);
     }
     else {
-        showError(input, inputError, settings);
+        showError(input, form, settings);
     }
 }
 
-function showError(input, inputError, {inputErrorClass, errorClass}) {
+function showError(input, form, {inputErrorClass, errorClass}) {
+    const inputError = form.querySelector(`.${input.id}-error`);
     input.classList.add(inputErrorClass);
     inputError.textContent = getValidationMessage(input);
     inputError.classList.add(errorClass);
 }
 
-function hideError(input, inputError, {inputErrorClass, errorClass}) {
+function hideError(input, form, {inputErrorClass, errorClass}) {
+    const inputError = form.querySelector(`.${input.id}-error`);
     input.classList.remove(inputErrorClass);
     inputError.textContent = '';
     inputError.classList.remove(errorClass);
@@ -53,12 +54,27 @@ function hasErrors(inputs) {
     return inputs.some(input => !input.validity.valid);
 }
 
-function updateSubmitButtonState(inputs, button, {inactiveButtonClass}) {
+function updateSubmitButtonState(inputs, button, settings) {
     if (hasErrors(inputs)){
-        button.classList.add(inactiveButtonClass);
+        disable(button, settings);
     }
     else {
-        button.classList.remove(inactiveButtonClass);
+        enable(button, settings);
     }
+}
 
+function enable(button, {inactiveButtonClass}) {
+    button.classList.remove(inactiveButtonClass);
+}
+
+function disable(button, {inactiveButtonClass}) {
+    button.classList.add(inactiveButtonClass);
+}
+
+function clearValidations(form, settings) {
+    const button = form.querySelector(settings.submitButtonSelector);
+    const inputs = Array.from(form.querySelectorAll(settings.inputSelector));
+
+    inputs.forEach(input => hideError(input, form, settings));
+    enable(button, settings);    
 }
