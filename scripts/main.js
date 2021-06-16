@@ -39,40 +39,7 @@ function initForm(form, onSubmit) {
     form.addEventListener('submit', (evt) => {
         evt.preventDefault();
         onSubmit();
-    });
-
-    enableValiidations(form);
-}
-
-function enableValiidations(form) {
-    const inputs = Array.from(form.querySelectorAll('.form__input'));
-    inputs.forEach(input => {
-        input.addEventListener('input', (evt) => {
-            checkValidity(input, form);
-        });
-    });
-}
-
-function checkValidity(input, form) {
-    const inputError = form.querySelector(`.${input.id}-error`);    
-    if (input.validity.valid) {
-        hideError(input, inputError);
-    }
-    else {
-        showError(input, inputError);
-    }
-}
-
-function showError(input, inputError) {
-    input.classList.add('form__input_invalid');
-    inputError.textContent = input.validationMessage;
-    inputError.classList.add('form__input-error_visible');
-}
-
-function hideError(input, inputError) {
-    input.classList.remove('form__input_invalid');
-    inputError.textContent = '';
-    inputError.classList.remove('form__input-error_visible');
+    });    
 }
 
 function openProfileInfoPopup() {
@@ -146,6 +113,13 @@ initForm(addElementForm, onAddElementFormSubmit);
 
 addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', openElementInfoPopup);
+
+enableValidation({
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    inputErrorClass: 'form__input_invalid',
+    errorClass: 'form__input-error_visible'
+});
 
 const initialElements = [
     {
