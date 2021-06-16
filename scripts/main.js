@@ -29,22 +29,33 @@ const validationSettings = {
 
 const openPopupClass = 'popup_opened';
 function openPopup(popup) {
-    if (!popup.classList.contains(openPopupClass)) {        
+    if (!popup.classList.contains(openPopupClass)) {
         popup.classList.add(openPopupClass);
+        enableClosePopupOnEsc();
     }
 }
 
 function closePopup(popup) {
-    popup.classList.remove(openPopupClass);    
+    if (popup.classList.contains(openPopupClass)) {
+        popup.classList.remove(openPopupClass);
+        disableClosePopupOnEsc();  
+    }
 }
 
 function enableClosePopupOnEsc() {
-    document.addEventListener('keydown', (evt) => {
-        if(evt.key === 'Escape'){
-            evt.preventDefault();
-            allPopups.forEach(popup => closePopup(popup));
-        }
-    })
+    document.addEventListener('keydown', closePopupOnEsc);
+}
+
+function disableClosePopupOnEsc() {
+    document.removeEventListener('keydown', closePopupOnEsc);
+}
+
+function closePopupOnEsc(evt) {
+    if(evt.key === 'Escape'){
+        evt.preventDefault();
+        const popup = document.querySelector(`.${openPopupClass}`);
+        closePopup(popup);
+    }
 }
 
 function initPopup(type){
@@ -141,7 +152,6 @@ addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', openElementInfoPopup);
 
 enableValidation(validationSettings);
-enableClosePopupOnEsc();
 
 const initialElements = [
     {
