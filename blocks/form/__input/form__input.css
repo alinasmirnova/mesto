@@ -7,6 +7,7 @@
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     padding-bottom: 13px;
+    width: 100%;
 }
 
 .form__input:focus {

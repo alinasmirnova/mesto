@@ -40,6 +40,39 @@ function initForm(form, onSubmit) {
         evt.preventDefault();
         onSubmit();
     });
+
+    enableValiidations(form);
+}
+
+function enableValiidations(form) {
+    const inputs = Array.from(form.querySelectorAll('.form__input'));
+    inputs.forEach(input => {
+        input.addEventListener('input', (evt) => {
+            checkValidity(input, form);
+        });
+    });
+}
+
+function checkValidity(input, form) {
+    const inputError = form.querySelector(`.${input.id}-error`);    
+    if (input.validity.valid) {
+        hideError(input, inputError);
+    }
+    else {
+        showError(input, inputError);
+    }
+}
+
+function showError(input, inputError) {
+    input.classList.add('form__input_invalid');
+    inputError.textContent = input.validationMessage;
+    inputError.classList.add('form__input-error_visible');
+}
+
+function hideError(input, inputError) {
+    input.classList.remove('form__input_invalid');
+    inputError.textContent = '';
+    inputError.classList.remove('form__input-error_visible');
 }
 
 function openProfileInfoPopup() {
@@ -108,8 +141,8 @@ function displayElements(elements) {
     insertElements(...elements.map(e => createElement(e)));
 }
 
-initForm(document.forms['profile-info'], onEditProfileFormSubmit);
-initForm(document.forms['add-element'], onAddElementFormSubmit);
+initForm(profileInfoForm, onEditProfileFormSubmit);
+initForm(addElementForm, onAddElementFormSubmit);
 
 addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', openElementInfoPopup);

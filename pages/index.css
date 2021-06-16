@@ -39,7 +39,7 @@
 @import url(../blocks/form/__input/form__input.css);
 @import url(../blocks/form/__input/_invalid/form__input_invalid.css);
 @import url(../blocks/form/__input-error/form__input-error.css);
-@import url(../blocks/form/__input-error/_visible/form_input-error_visible.css);
+@import url(../blocks/form/__input-error/_visible/form__input-error_visible.css);
 
 @import url(../blocks/preview/preview.css);
 @import url(../blocks/preview/__image/preview__image.css);
