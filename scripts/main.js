@@ -16,6 +16,7 @@ const previewTitle = previewPopup.querySelector('.preview__title');
 
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
+const allPopups = Array.from(document.querySelectorAll('.popup'));
 
 const validationSettings = {
     formSelector: '.form',
@@ -35,6 +36,15 @@ function openPopup(popup) {
 
 function closePopup(popup) {
     popup.classList.remove(openPopupClass);    
+}
+
+function enableClosePopupOnEsc() {
+    document.addEventListener('keydown', (evt) => {
+        if(evt.key === 'Escape'){
+            evt.preventDefault();
+            allPopups.forEach(popup => closePopup(popup));
+        }
+    })
 }
 
 function initPopup(type){
@@ -131,6 +141,7 @@ addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', openElementInfoPopup);
 
 enableValidation(validationSettings);
+enableClosePopupOnEsc();
 
 const initialElements = [
     {
