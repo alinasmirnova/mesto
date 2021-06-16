@@ -24,7 +24,7 @@ function checkValidity(input, form, settings) {
 
 function showError(input, inputError, {inputErrorClass, errorClass}) {
     input.classList.add(inputErrorClass);
-    inputError.textContent = input.validationMessage;
+    inputError.textContent = getValidationMessage(input);
     inputError.classList.add(errorClass);
 }
 
@@ -32,4 +32,17 @@ function hideError(input, inputError, {inputErrorClass, errorClass}) {
     input.classList.remove(inputErrorClass);
     inputError.textContent = '';
     inputError.classList.remove(errorClass);
+}
+
+function getValidationMessage(input) {
+    if (input.validity.valueMissing)
+        return 'Вы пропустили это поле';
+
+    if (input.validity.typeMismatch && input.type === 'url')
+        return 'Введите адрес сайта';
+
+    if (input.validity.tooShort)
+        return 'Строка должна быть не короче 2 символов';
+    
+    return input.validationMessage;
 }
