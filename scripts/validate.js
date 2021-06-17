@@ -54,9 +54,11 @@ function hasErrors(inputs) {
 function updateSubmitButtonState(inputs, button, {inactiveButtonClass}) {
     if (hasErrors(inputs)){
         button.classList.add(inactiveButtonClass);
+        button.disabled = true;
     }
     else {
         button.classList.remove(inactiveButtonClass);
+        button.disabled = false;
     }
 }
 
