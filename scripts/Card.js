@@ -20,7 +20,9 @@ class Card {
     }
 
     _getEmptyCard() {
-        return this._template.querySelector('.element')
+        return this._template
+                    .content
+                    .querySelector('.element')
                     .cloneNode(true);
     }
 

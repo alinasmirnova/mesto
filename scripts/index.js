@@ -25,7 +25,7 @@ const placeNamePopupField = addElementForm.elements.name;
 const placeLinkPopupField = addElementForm.elements.link;
 
 const elements = document.querySelector('.elements');
-const elementTemplate = document.querySelector('#element-template').content;
+const elementTemplate = document.querySelector('#element-template');
 
 
 function initForm(form, onSubmit) {
