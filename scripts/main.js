@@ -1,12 +1,24 @@
+import FormValidator from "./FormValidator.js";
+
+const validationSettings = {
+    inputSelector: '.form__input',
+    inputErrorClass: 'form__input_invalid',
+    errorClass: 'form__input-error_visible',
+    submitButtonSelector: '.popup__save-button',
+    inactiveButtonClass: 'popup__save-button_disabled'
+};
+
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
 const profileInfoPopup = initPopup('.popup_type_profile-info');
 const profileInfoForm = document.forms['profile-info'];
+const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
 const namePopupField = profileInfoForm.elements.name;
 const aboutPopupField = profileInfoForm.elements.about;
 
 const elementInfoPopup = initPopup('.popup_type_element-info');
 const addElementForm = document.forms['add-element'];
+const addElementValidator = new FormValidator(validationSettings, addElementForm);
 const placeNamePopupField = addElementForm.elements.name;
 const placeLinkPopupField = addElementForm.elements.link;
 
@@ -16,16 +28,6 @@ const previewTitle = previewPopup.querySelector('.preview__title');
 
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
-const allPopups = Array.from(document.querySelectorAll('.popup'));
-
-const validationSettings = {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    inputErrorClass: 'form__input_invalid',
-    errorClass: 'form__input-error_visible',
-    submitButtonSelector: '.popup__save-button',
-    inactiveButtonClass: 'popup__save-button_disabled'
-};
 
 const openPopupClass = 'popup_opened';
 function openPopup(popup) {
@@ -80,13 +82,13 @@ function initForm(form, onSubmit) {
 function openProfileInfoPopup() {
     namePopupField.value = nameProfileField.textContent;
     aboutPopupField.value = aboutProfileField.textContent;
-    clearValidations(profileInfoForm, validationSettings);
+    profileInfoValidator.clearValidations();
     openPopup(profileInfoPopup);
 }
 
 function openElementInfoPopup() {
     addElementForm.reset();
-    clearValidations(addElementForm, validationSettings);
+    addElementValidator.clearValidations();
     openPopup(elementInfoPopup);
 }
 
@@ -151,7 +153,8 @@ initForm(addElementForm, onAddElementFormSubmit);
 addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', openElementInfoPopup);
 
-enableValidation(validationSettings);
+profileInfoValidator.enableValidations();
+addElementValidator.enableValidations();
 
 const initialElements = [
     {
