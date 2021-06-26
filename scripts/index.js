@@ -74,7 +74,11 @@ function insertElements(...items) {
 }
 
 function displayElements(elements) {
-    insertElements(...elements.map(e => new Card(e, elementTemplate).build()));
+    insertElements(...elements.map(e => createElement(e)));
+}
+
+function createElement(data) {
+    return new Card(data, elementTemplate).build();
 }
 
 initForm(profileInfoForm, onEditProfileFormSubmit);
