@@ -1,4 +1,6 @@
 import FormValidator from "./FormValidator.js";
+import Card from "./Card.js";
+import { openPopup, closePopup, initPopup } from "./popup.js";
 
 const validationSettings = {
     inputSelector: '.form__input',
@@ -22,55 +24,9 @@ const addElementValidator = new FormValidator(validationSettings, addElementForm
 const placeNamePopupField = addElementForm.elements.name;
 const placeLinkPopupField = addElementForm.elements.link;
 
-const previewPopup = initPopup('.popup_type_element-preview');
-const previewImage = previewPopup.querySelector('.preview__image');
-const previewTitle = previewPopup.querySelector('.preview__title');
-
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
 
-const openPopupClass = 'popup_opened';
-function openPopup(popup) {
-    if (!popup.classList.contains(openPopupClass)) {
-        popup.classList.add(openPopupClass);
-        enableClosePopupOnEsc();
-    }
-}
-
-function closePopup(popup) {
-    if (popup.classList.contains(openPopupClass)) {
-        popup.classList.remove(openPopupClass);
-        disableClosePopupOnEsc();  
-    }
-}
-
-function enableClosePopupOnEsc() {
-    document.addEventListener('keydown', closePopupOnEsc);
-}
-
-function disableClosePopupOnEsc() {
-    document.removeEventListener('keydown', closePopupOnEsc);
-}
-
-function closePopupOnEsc(evt) {
-    if(evt.key === 'Escape'){
-        evt.preventDefault();
-        const popup = document.querySelector(`.${openPopupClass}`);
-        closePopup(popup);
-    }
-}
-
-function initPopup(type){
-    const popup = document.querySelector(type);
-    const closeButton = popup.querySelector('.popup__close-button');    
-    closeButton.addEventListener('click', () => closePopup(popup));
-    
-    const popupContent = popup.querySelector('.popup__content');
-    popupContent.addEventListener('click', evt => evt.stopPropagation());
-    popup.addEventListener('click', () => closePopup(popup));
-
-    return popup;
-}
 
 function initForm(form, onSubmit) {
     form.addEventListener('submit', (evt) => {
@@ -90,13 +46,6 @@ function openElementInfoPopup() {
     addElementForm.reset();
     addElementValidator.clearValidations();
     openPopup(elementInfoPopup);
-}
-
-function openElementPreviewPopup(name, link) {
-    previewTitle.textContent = name;
-    previewImage.src = link;
-    previewImage.alt = name;
-    openPopup(previewPopup);
 }
 
 function onEditProfileFormSubmit(evt) {
@@ -120,31 +69,12 @@ function addOnClickAction(selector, onClick) {
     editProfileButton.addEventListener('click', onClick);
 }
 
-function createElement({name, link}) {
-    const element = elementTemplate.querySelector('.element').cloneNode(true);
-    const image = element.querySelector('.element__image');
-    image.style.backgroundImage = `url('${link}')`;
-    element.querySelector('.element__header').textContent = name;
-    element.querySelector('.element__like').addEventListener('click', toggleLike);
-    element.querySelector('.element__delete').addEventListener('click', removeElement);
-    image.addEventListener('click', () => openElementPreviewPopup(name, link))
-    return element;
-}
-
 function insertElements(...items) {
     elements.prepend(...items);
 }
 
-function toggleLike(evt){
-    evt.target.classList.toggle('element__like_active');
-}
-
-function removeElement(evt) {
-    evt.target.closest('.element').remove();
-}
-
 function displayElements(elements) {
-    insertElements(...elements.map(e => createElement(e)));
+    insertElements(...elements.map(e => new Card(e, elementTemplate).build()));
 }
 
 initForm(profileInfoForm, onEditProfileFormSubmit);
