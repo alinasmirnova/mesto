@@ -4,9 +4,9 @@ import Section from "./Section.js";
 import { validationSettings, initialElements } from "./constants.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 
-const nameProfileField = document.querySelector('.profile__name');
-const aboutProfileField = document.querySelector('.profile__about');
+const userInfo = new UserInfo('.profile__name', '.profile__about')
 const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
 const profileInfoForm = document.forms['profile-info'];
 const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
@@ -23,8 +23,9 @@ const elementTemplate = document.querySelector('#element-template');
 
 
 function openProfileInfoPopup() {
-    namePopupField.value = nameProfileField.textContent;
-    aboutPopupField.value = aboutProfileField.textContent;
+    const v = userInfo.getUserInfo();
+    namePopupField.value = v.name;
+    aboutPopupField.value = v.about;
     profileInfoValidator.clearValidations();
     profileInfoPopup.open();
 }
@@ -35,8 +36,7 @@ function openElementInfoPopup() {
 }
 
 function onEditProfileFormSubmit(evt) {
-    nameProfileField.textContent = namePopupField.value;
-    aboutProfileField.textContent = aboutPopupField.value;
+    userInfo.setUserInfo({name: namePopupField.value, about: aboutPopupField.value});
     profileInfoPopup.close();    
 }
 
