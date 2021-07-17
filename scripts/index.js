@@ -15,6 +15,12 @@ const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElem
 const addElementForm = document.forms['add-element'];
 const addElementValidator = new FormValidator(validationSettings, addElementForm);
 
+const popupWithImage = new PopupWithImage('.popup_type_element-preview');
+const elementsSection = new Section({
+    items: initialElements,
+    renderer: (data) => new Card(data, elementTemplate, (name, link) => popupWithImage.open(name, link)).build()
+}, '.elements');
+
 function openProfileInfoPopup() {
     profileInfoPopup.open(userInfo.getUserInfo());
     profileInfoValidator.clearValidations();
@@ -45,11 +51,5 @@ addOnClickAction('.profile__add-button', openElementInfoPopup);
 
 profileInfoValidator.enableValidations();
 addElementValidator.enableValidations();
-
-const popupWithImage = new PopupWithImage('.popup_type_element-preview');
-const elementsSection = new Section({
-    items: initialElements,
-    renderer: (data) => new Card(data, elementTemplate, (name, link) => popupWithImage.open(name, link)).build()
-}, '.elements');
 
 elementsSection.render();
