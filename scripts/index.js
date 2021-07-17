@@ -1,14 +1,7 @@
 import FormValidator from "./FormValidator.js";
 import Card from "./Card.js";
 import { openPopup, closePopup, initPopup } from "./popup.js";
-
-const validationSettings = {
-    inputSelector: '.form__input',
-    inputErrorClass: 'form__input_invalid',
-    errorClass: 'form__input-error_visible',
-    submitButtonSelector: '.popup__save-button',
-    inactiveButtonClass: 'popup__save-button_disabled'
-};
+import { validationSettings, initialElements } from "./constants.js";
 
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
@@ -90,30 +83,4 @@ addOnClickAction('.profile__add-button', openElementInfoPopup);
 profileInfoValidator.enableValidations();
 addElementValidator.enableValidations();
 
-const initialElements = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
 displayElements(initialElements);
