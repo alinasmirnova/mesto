@@ -1,7 +1,7 @@
 import FormValidator from "./FormValidator.js";
 import Card from "./Card.js";
 import Section from "./Section.js";
-import { openPopup, closePopup, initPopup } from "./popup.js";
+import { openPopup, closePopup, initPopup } from "./popupOld.js";
 import { validationSettings, initialElements } from "./constants.js";
 
 const nameProfileField = document.querySelector('.profile__name');

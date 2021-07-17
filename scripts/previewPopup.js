@@ -1,4 +1,4 @@
-import {openPopup, initPopup} from './popup.js'
+import {openPopup, initPopup} from './popupOld.js'
 
 const previewPopup = initPopup('.popup_type_element-preview');
 const previewImage = previewPopup.querySelector('.preview__image');
