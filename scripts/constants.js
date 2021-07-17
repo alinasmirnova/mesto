@@ -33,4 +33,6 @@ const initialElements = [
     }
 ];
 
-export {validationSettings, initialElements};
+const elementTemplate = document.querySelector('#element-template');
+
+export {validationSettings, initialElements, elementTemplate};

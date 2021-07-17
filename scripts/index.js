@@ -1,7 +1,7 @@
 import FormValidator from "./FormValidator.js";
 import Card from "./Card.js";
 import Section from "./Section.js";
-import { validationSettings, initialElements } from "./constants.js";
+import { validationSettings, initialElements, elementTemplate } from "./constants.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
 import UserInfo from "./UserInfo.js";
@@ -14,8 +14,6 @@ const profileInfoValidator = new FormValidator(validationSettings, profileInfoFo
 const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
 const addElementForm = document.forms['add-element'];
 const addElementValidator = new FormValidator(validationSettings, addElementForm);
-
-const elementTemplate = document.querySelector('#element-template');
 
 function openProfileInfoPopup() {
     profileInfoPopup.open(userInfo.getUserInfo());
