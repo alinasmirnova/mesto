@@ -1,11 +1,10 @@
-import {openElementPreviewPopup} from './previewPopup.js'
-
 class Card {
-    constructor(data, template) {
+    constructor(data, template, onClick) {
         this._imageLink = data.link;
         this._title = data.name;
         
         this._template = template;
+        this._onClick = onClick;
     }
 
     build() {
@@ -29,7 +28,7 @@ class Card {
     _setEventListeners() {
         this._card.querySelector('.element__like').addEventListener('click', this._toggleLike);
         this._card.querySelector('.element__delete').addEventListener('click', () => this._remove());
-        this._image.addEventListener('click', () => openElementPreviewPopup(this._title, this._imageLink));
+        this._image.addEventListener('click', () => this._onClick(this._title, this._imageLink));
     }
 
     _toggleLike(evt){

@@ -3,6 +3,7 @@ import Card from "./Card.js";
 import Section from "./Section.js";
 import { openPopup, closePopup, initPopup } from "./popupOld.js";
 import { validationSettings, initialElements } from "./constants.js";
+import PopupWithImage from "./PopupWithImage.js";
 
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
@@ -72,9 +73,10 @@ addOnClickAction('.profile__add-button', openElementInfoPopup);
 profileInfoValidator.enableValidations();
 addElementValidator.enableValidations();
 
+const popupWithImage = new PopupWithImage('.popup_type_element-preview');
 const elementsSection = new Section({
     items: initialElements,
-    renderer: (data) => new Card(data, elementTemplate).build()
+    renderer: (data) => new Card(data, elementTemplate, (name, link) => popupWithImage.open(name, link)).build()
 }, '.elements');
 
 elementsSection.render();
