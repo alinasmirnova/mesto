@@ -1,5 +1,6 @@
 import FormValidator from "./FormValidator.js";
 import Card from "./Card.js";
+import Section from "./Section.js";
 import { openPopup, closePopup, initPopup } from "./popup.js";
 import { validationSettings, initialElements } from "./constants.js";
 
@@ -52,7 +53,7 @@ function onAddElementFormSubmit(evt) {
         name: placeNamePopupField.value,
         link: placeLinkPopupField.value,
     };
-    insertElements(createElement(place));
+    elementsSection.addItem(place);
     closePopup(elementInfoPopup);
     addElementForm.reset();   
 }
@@ -60,18 +61,6 @@ function onAddElementFormSubmit(evt) {
 function addOnClickAction(selector, onClick) {
     const editProfileButton = document.querySelector(selector);
     editProfileButton.addEventListener('click', onClick);
-}
-
-function insertElements(...items) {
-    elements.prepend(...items);
-}
-
-function displayElements(elements) {
-    insertElements(...elements.map(e => createElement(e)));
-}
-
-function createElement(data) {
-    return new Card(data, elementTemplate).build();
 }
 
 initForm(profileInfoForm, onEditProfileFormSubmit);
@@ -83,4 +72,9 @@ addOnClickAction('.profile__add-button', openElementInfoPopup);
 profileInfoValidator.enableValidations();
 addElementValidator.enableValidations();
 
-displayElements(initialElements);
+const elementsSection = new Section({
+    items: initialElements,
+    renderer: (data) => new Card(data, elementTemplate).build()
+}, '.elements');
+
+elementsSection.render();
