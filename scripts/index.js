@@ -1,52 +1,43 @@
 import FormValidator from "./FormValidator.js";
 import Card from "./Card.js";
 import Section from "./Section.js";
-import { openPopup, closePopup, initPopup } from "./popupOld.js";
 import { validationSettings, initialElements } from "./constants.js";
 import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
 
 const nameProfileField = document.querySelector('.profile__name');
 const aboutProfileField = document.querySelector('.profile__about');
-const profileInfoPopup = initPopup('.popup_type_profile-info');
+const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
 const profileInfoForm = document.forms['profile-info'];
 const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
 const namePopupField = profileInfoForm.elements.name;
 const aboutPopupField = profileInfoForm.elements.about;
 
-const elementInfoPopup = initPopup('.popup_type_element-info');
+const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
 const addElementForm = document.forms['add-element'];
 const addElementValidator = new FormValidator(validationSettings, addElementForm);
 const placeNamePopupField = addElementForm.elements.name;
 const placeLinkPopupField = addElementForm.elements.link;
 
-const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template');
 
-
-function initForm(form, onSubmit) {
-    form.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        onSubmit();
-    });    
-}
 
 function openProfileInfoPopup() {
     namePopupField.value = nameProfileField.textContent;
     aboutPopupField.value = aboutProfileField.textContent;
     profileInfoValidator.clearValidations();
-    openPopup(profileInfoPopup);
+    profileInfoPopup.open();
 }
 
 function openElementInfoPopup() {
-    addElementForm.reset();
     addElementValidator.clearValidations();
-    openPopup(elementInfoPopup);
+    elementInfoPopup.open();
 }
 
 function onEditProfileFormSubmit(evt) {
     nameProfileField.textContent = namePopupField.value;
     aboutProfileField.textContent = aboutPopupField.value;
-    closePopup(profileInfoPopup);    
+    profileInfoPopup.close();    
 }
 
 function onAddElementFormSubmit(evt) {
@@ -55,17 +46,13 @@ function onAddElementFormSubmit(evt) {
         link: placeLinkPopupField.value,
     };
     elementsSection.addItem(place);
-    closePopup(elementInfoPopup);
-    addElementForm.reset();   
+    elementInfoPopup.close();
 }
 
 function addOnClickAction(selector, onClick) {
     const editProfileButton = document.querySelector(selector);
     editProfileButton.addEventListener('click', onClick);
 }
-
-initForm(profileInfoForm, onEditProfileFormSubmit);
-initForm(addElementForm, onAddElementFormSubmit);
 
 addOnClickAction('.profile__edit-button', openProfileInfoPopup);
 addOnClickAction('.profile__add-button', openElementInfoPopup);

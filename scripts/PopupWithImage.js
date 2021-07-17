@@ -6,6 +6,8 @@ class PopupWithImage extends Popup {
 
         this._previewImage = this._popup.querySelector('.preview__image');
         this._previewTitle = this._popup.querySelector('.preview__title');
+
+        this.setEventListeners();   
     }
 
     open(name, link) {
