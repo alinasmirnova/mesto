@@ -1,3 +1,7 @@
 .popup__save-button_disabled {
     opacity: 0.2;
 }
+
+.popup__save-button_disabled:hover {
+    opacity: 0.2;
+}
