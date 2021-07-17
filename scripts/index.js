@@ -10,24 +10,16 @@ const userInfo = new UserInfo('.profile__name', '.profile__about')
 const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
 const profileInfoForm = document.forms['profile-info'];
 const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
-const namePopupField = profileInfoForm.elements.name;
-const aboutPopupField = profileInfoForm.elements.about;
 
 const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
 const addElementForm = document.forms['add-element'];
 const addElementValidator = new FormValidator(validationSettings, addElementForm);
-const placeNamePopupField = addElementForm.elements.name;
-const placeLinkPopupField = addElementForm.elements.link;
 
 const elementTemplate = document.querySelector('#element-template');
 
-
 function openProfileInfoPopup() {
-    const v = userInfo.getUserInfo();
-    namePopupField.value = v.name;
-    aboutPopupField.value = v.about;
+    profileInfoPopup.open(userInfo.getUserInfo());
     profileInfoValidator.clearValidations();
-    profileInfoPopup.open();
 }
 
 function openElementInfoPopup() {
@@ -35,17 +27,13 @@ function openElementInfoPopup() {
     elementInfoPopup.open();
 }
 
-function onEditProfileFormSubmit(evt) {
-    userInfo.setUserInfo({name: namePopupField.value, about: aboutPopupField.value});
+function onEditProfileFormSubmit(newUserInfo) {
+    userInfo.setUserInfo(newUserInfo);
     profileInfoPopup.close();    
 }
 
-function onAddElementFormSubmit(evt) {
-    const place = {
-        name: placeNamePopupField.value,
-        link: placeLinkPopupField.value,
-    };
-    elementsSection.addItem(place);
+function onAddElementFormSubmit(newPlace) {
+    elementsSection.addItem(newPlace);
     elementInfoPopup.close();
 }
 

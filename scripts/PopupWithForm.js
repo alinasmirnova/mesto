@@ -9,21 +9,38 @@ class PopupWithForm extends Popup {
     }
 
     _getInputValues() {
-        console.log(this._form.elements);
+        return Array.from(this._form.elements)
+                    .filter(e => e['name'])
+                    .reduce((res, cur) => {
+                        res[cur['name']] = cur.value;
+                        return res;
+                    }, {});
+    }
+
+    _setInputValues(obj) {
+        Object.keys(obj).forEach(item => {
+            this._form.elements[item].value = obj[item];
+        });
     }
 
     setEventListeners() {
         super.setEventListeners();
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._getInputValues();
-            this._onFormSubmit();            
+            this._onFormSubmit(this._getInputValues());            
         }); 
     }
 
     close() {
         super.close();
         this._form.reset();
+    }
+
+    open(values) {
+        if(values) {
+            this._setInputValues(values);
+        }
+        super.open();
     }
 }
 
