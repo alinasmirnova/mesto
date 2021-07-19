@@ -7,22 +7,21 @@ class FormValidator {
 
         this._form = form;
         this._inputs = Array.from(this._form.querySelectorAll(settings.inputSelector));
+        this._submitButton = this._form.querySelector(settings.submitButtonSelector);
     }
 
     enableValidations() {
-        const button = this._form.querySelector(this._submitButtonSelector);
         this._inputs.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkValidity(input);
-                this._updateSubmitButtonState(this._inputs, button);
+                this._updateSubmitButtonState(this._inputs, this._submitButton);
             });
         });
     }
 
     clearValidations() {
-        const button = this._form.querySelector(this._submitButtonSelector);
         this._inputs.forEach(input => this._hideError(input));
-        this._updateSubmitButtonState(this._inputs, button);    
+        this._updateSubmitButtonState(this._inputs, this._submitButton);    
     }
     
     _checkValidity(input) {
