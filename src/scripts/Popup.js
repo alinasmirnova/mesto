@@ -1,3 +1,5 @@
+import { escapeKey } from './constants.js'
+
 class Popup {
     constructor(popupSelector) {
         this._openPopupClass = 'popup_opened';
@@ -29,7 +31,7 @@ class Popup {
     }
 
     _handleEscClose(evt) {
-        if(evt.key === 'Escape'){
+        if(evt.key === escapeKey){
             evt.preventDefault();
             this.close();
         }

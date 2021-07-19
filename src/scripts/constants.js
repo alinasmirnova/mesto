@@ -35,4 +35,6 @@ const initialElements = [
 
 const elementTemplate = document.querySelector('#element-template');
 
-export {validationSettings, initialElements, elementTemplate};
+const escapeKey = 'Escape';
+
+export {validationSettings, initialElements, elementTemplate, escapeKey};
