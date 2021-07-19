@@ -14,14 +14,14 @@ class FormValidator {
         this._inputs.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkValidity(input);
-                this._updateSubmitButtonState(this._inputs, this._submitButton);
+                this._updateSubmitButtonState();
             });
         });
     }
 
     clearValidations() {
         this._inputs.forEach(input => this._hideError(input));
-        this._updateSubmitButtonState(this._inputs, this._submitButton);    
+        this._updateSubmitButtonState();    
     }
     
     _checkValidity(input) {
@@ -57,18 +57,18 @@ class FormValidator {
         return input.validationMessage;
     }
     
-    _hasErrors(inputs) {
-        return inputs.some(input => !input.validity.valid);
+    _hasErrors() {
+        return this._inputs.some(input => !input.validity.valid);
     }
     
-    _updateSubmitButtonState(inputs, button) {
-        if (this._hasErrors(inputs)){
-            button.classList.add(this._inactiveButtonClass);
-            button.disabled = true;
+    _updateSubmitButtonState() {
+        if (this._hasErrors()){
+            this._submitButton.classList.add(this._inactiveButtonClass);
+            this._submitButton.disabled = true;
         }
         else {
-            button.classList.remove(this._inactiveButtonClass);
-            button.disabled = false;
+            this._submitButton.classList.remove(this._inactiveButtonClass);
+            this._submitButton.disabled = false;
         }
     }   
 }
