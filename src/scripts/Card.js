@@ -2,6 +2,7 @@ class Card {
     constructor(data, template, onClick) {
         this._imageLink = data.link;
         this._title = data.name;
+        this._id = data.id;
         
         this._template = template;
         this._onClick = onClick;
