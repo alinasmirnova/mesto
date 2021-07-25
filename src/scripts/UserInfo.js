@@ -4,7 +4,7 @@ class UserInfo {
         this._aboutField = document.querySelector(aboutFieldSelector);
         this._avatarImage = document.querySelector(avatarSelector);
 
-        this._id = userInfo.id;
+        this.id = userInfo._id;
         this.setAvatar(userInfo);
         this.setUserInfo(userInfo);
     }

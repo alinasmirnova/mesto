@@ -4,6 +4,7 @@ class Card {
         this._title = data.name;
         this._id = data.id;
         this._likes = data.likes;
+        this._deleteEnabled = data.deleteEnabled;
         
         this._template = template;
         this._onClick = onClick;
@@ -19,6 +20,9 @@ class Card {
         this._card.querySelector('.element__header').textContent = this._title;
 
         this._card.querySelector('.like__counter').textContent = this._likes.length;
+
+        if (this._deleteEnabled)
+            this._card.querySelector('.element__delete').classList.add('element__delete_active');
         
         return this._card;    
     }
@@ -32,8 +36,10 @@ class Card {
 
     _setEventListeners() {
         this._card.querySelector('.element__like').addEventListener('click', this._toggleLike);
-        this._card.querySelector('.element__delete').addEventListener('click', () => this._onDeleteClick(this));
         this._image.addEventListener('click', () => this._onClick(this._title, this._imageLink));
+
+        if (this._deleteEnabled)
+            this._card.querySelector('.element__delete').addEventListener('click', () => this._onDeleteClick(this));    
     }
 
     _toggleLike(evt){

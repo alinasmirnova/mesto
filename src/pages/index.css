@@ -23,6 +23,7 @@
 @import url(../blocks/element/__header/element__header.css);
 @import url(../blocks/element/__like/element__like.css);
 @import url(../blocks/element/__delete/element__delete.css);
+@import url(../blocks/element/__delete/_active/element__delete_active.css);
 
 @import url(../blocks/like/like.css);
 @import url(../blocks/like/__button/like__button.css);

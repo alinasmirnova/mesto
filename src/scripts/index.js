@@ -22,7 +22,7 @@ function onDeleteCardClick(card) {
         card.remove()
         submitPopup.close();
     });
-} 
+}
 
 function addOnClickAction(selector, onClick) {
     const editProfileButton = document.querySelector(selector);
@@ -33,16 +33,8 @@ function onApiError(err) {
     console.log(err)
 }
 
-function getCardsOrderedByCreationDate(cards) {
-    return cards.map(card => {
-        return {
-            name: card.name,
-            link: card.link,
-            createdAt: Date.parse(card.createdAt),
-            likes: card.likes
-        }
-    })
-    .sort((card1, card2) => {
+function orderedByCreationDate(cards) {
+    return cards.sort((card1, card2) => {
         if (card1.createdAt < card2.createdAt)
             return -1;
         if (card1.createdAt > card2.createdAt)
@@ -51,10 +43,22 @@ function getCardsOrderedByCreationDate(cards) {
     });
 }
 
-api.getUserInfo()
+function getCardData(card, userInfo){
+    return {
+        name: card.name,
+        link: card.link,
+        createdAt: Date.parse(card.createdAt),
+        likes: card.likes,
+        deleteEnabled: card.owner._id === userInfo.id
+    }
+}
+
+const userInfoPromise = api.getUserInfo()
 .then(userInfo => {
     return new UserInfo(userInfo, userInfoSelectors)
-})
+});
+
+userInfoPromise
 .then(userInfo => {
     const profileInfoForm = document.forms['profile-info'];
     const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
@@ -79,8 +83,19 @@ api.getUserInfo()
 })
 .catch(onApiError);
 
-api.getInitialCards()
-.then(cards => {
+const cardsPromise = api.getInitialCards();
+
+Promise.all([userInfoPromise, cardsPromise])
+.then (results => {
+    const userInfo = results[0];
+    const cards = results[1];
+
+    return {
+        cards: cards.map(c => getCardData(c, userInfo)),
+        me: userInfo
+    };
+})
+.then(({cards, me}) => {
     const addElementForm = document.forms['add-element'];
     const addElementValidator = new FormValidator(validationSettings, addElementForm);
 
@@ -88,17 +103,17 @@ api.getInitialCards()
     const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
     
     const elementsSection = new Section({
-        items: getCardsOrderedByCreationDate(cards),
+        items: orderedByCreationDate(cards),
         renderer: (data) => new Card(data, elementTemplate, {
             onClick: (name, link) => popupWithImage.open(name, link),
-            onDeleteClick: onDeleteCardClick
+            onDeleteClick: onDeleteCardClick   
         }).build()
     }, '.elements');
 
     function onAddElementFormSubmit(newPlace) {
         api.createCard(newPlace)
         .then(newCard => {
-            elementsSection.addItem(newCard);
+            elementsSection.addItem(getCardData(newCard, me));
             elementInfoPopup.close();
         })
         .catch(onApiError);    
