@@ -7,11 +7,18 @@ import '../pages/index.css';
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
 import UserInfo from "./UserInfo.js";
+import Api from "./Api.js"
 
-const userInfo = new UserInfo('.profile__name', '.profile__about')
-const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
-const profileInfoForm = document.forms['profile-info'];
-const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
+const api = new Api({ 
+    baseUri: 'https://nomoreparties.co/v1/cohort-26', 
+    authToken: 'e9c41e78-4da5-45a9-a519-987aa0bd1bef'
+});
+
+const userInfoSelectors = {
+    nameFieldSelector: '.profile__name',
+    aboutFieldSelector: '.profile__about',
+    avatarSelector: '.profile__avatar'
+}
 
 const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
 const addElementForm = document.forms['add-element'];
@@ -23,19 +30,10 @@ const elementsSection = new Section({
     renderer: (data) => new Card(data, elementTemplate, (name, link) => popupWithImage.open(name, link)).build()
 }, '.elements');
 
-function openProfileInfoPopup() {
-    profileInfoPopup.open(userInfo.getUserInfo());
-    profileInfoValidator.clearValidations();
-}
 
 function openElementInfoPopup() {
     addElementValidator.clearValidations();
     elementInfoPopup.open();
-}
-
-function onEditProfileFormSubmit(newUserInfo) {
-    userInfo.setUserInfo(newUserInfo);
-    profileInfoPopup.close();    
 }
 
 function onAddElementFormSubmit(newPlace) {
@@ -48,10 +46,36 @@ function addOnClickAction(selector, onClick) {
     editProfileButton.addEventListener('click', onClick);
 }
 
-addOnClickAction('.profile__edit-button', openProfileInfoPopup);
+function onApiError(err) {
+    console.log(err)
+}
+
 addOnClickAction('.profile__add-button', openElementInfoPopup);
 
-profileInfoValidator.enableValidations();
+api.getUserInfo()
+.then(userInfo => {
+    return new UserInfo(userInfo, userInfoSelectors)
+})
+.then(userInfo => {
+    const profileInfoForm = document.forms['profile-info'];
+    const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
+    const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
+
+    function openProfileInfoPopup() {
+        profileInfoPopup.open(userInfo.getUserInfo());
+        profileInfoValidator.clearValidations();
+    }
+
+    function onEditProfileFormSubmit(newUserInfo) {
+        userInfo.setUserInfo(newUserInfo);
+        profileInfoPopup.close();    
+    }
+
+    addOnClickAction('.profile__edit-button', openProfileInfoPopup);
+    profileInfoValidator.enableValidations();
+})
+.catch(onApiError);
+
 addElementValidator.enableValidations();
 
 elementsSection.render();
