@@ -76,10 +76,10 @@ userInfoPromise
     function onEditProfileFormSubmit(newUserInfo) {
         api.setUserInfo(newUserInfo)
         .then(newInfo => {
-            userInfo.setUserInfo(newInfo);
-            profileInfoPopup.close();
+            userInfo.setUserInfo(newInfo);            
         })
-        .catch(onApiError);        
+        .catch(onApiError)
+        .finally(() => profileInfoPopup.close());        
     }
 
     addOnClickAction('.profile__edit-button', openProfileInfoPopup);
@@ -117,10 +117,10 @@ Promise.all([userInfoPromise, cardsPromise])
     function onAddElementFormSubmit(newPlace) {
         api.createCard(newPlace)
         .then(newCard => {
-            elementsSection.addItem(getCardData(newCard, me));
-            elementInfoPopup.close();
+            elementsSection.addItem(getCardData(newCard, me));    
         })
-        .catch(onApiError);    
+        .catch(onApiError)
+        .finally(() => elementInfoPopup.close());    
     }
 
     function openElementInfoPopup() {
