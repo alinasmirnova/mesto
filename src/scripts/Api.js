@@ -30,6 +30,15 @@ class Api {
         return this._delete(`cards/${id}`);
     }
 
+    toggleLike(cardId, isCurrentlyActive) {
+        if (isCurrentlyActive) {
+            return this._delete(`cards/likes/${cardId}`);
+        }
+        else {
+            return this._put(`cards/likes/${cardId}`);
+        }
+    }
+
     _get(subPath) {
         return this._getJson(fetch(this._buildUri(subPath), {
             headers: {
@@ -46,6 +55,15 @@ class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
+        }));
+    }
+
+    _put(subPath) {
+        return this._getJson(fetch(this._buildUri(subPath), {
+            method: 'PUT',
+            headers: {
+                authorization: this._authToken
+            }
         }));
     }
 

@@ -27,6 +27,14 @@ function onDeleteCardClick(card) {
     });
 }
 
+function onLikeCardClick(card) {
+    api.toggleLike(card.id, card.likeIsActive).then(newCard => {
+        card.toggleLike();
+        card.setLikesCount(newCard.likes.length);
+    })
+    .catch(onApiError);
+}
+
 function addOnClickAction(selector, onClick) {
     const editProfileButton = document.querySelector(selector);
     editProfileButton.addEventListener('click', onClick);
@@ -52,7 +60,7 @@ function getCardData(card, userInfo){
         link: card.link,
         createdAt: Date.parse(card.createdAt),
         likesCount: card.likes.length,
-        likeIsActive: card.likes.some(l => l.id ===  userInfo.id),
+        likeIsActive: card.likes.some(l => l._id ===  userInfo.id),
         deleteEnabled: card.owner._id === userInfo.id,
         id: card._id
     }
@@ -93,7 +101,7 @@ const cardsPromise = api.getInitialCards();
 Promise.all([userInfoPromise, cardsPromise])
 .then (results => {
     const userInfo = results[0];
-    const cards = results[1];
+    const cards = results[1];    
 
     return {
         cards: cards.map(c => getCardData(c, userInfo)),
@@ -109,10 +117,14 @@ Promise.all([userInfoPromise, cardsPromise])
     
     const elementsSection = new Section({
         items: orderedByCreationDate(cards),
-        renderer: (data) => new Card(data, elementTemplate, {
-            onClick: (name, link) => popupWithImage.open(name, link),
-            onDeleteClick: onDeleteCardClick   
-        }).build()
+        renderer: (data) => {
+            return new Card(data, elementTemplate, {
+                onClick: (name, link) => popupWithImage.open(name, link),
+                onDeleteClick: onDeleteCardClick,
+                onLikeClick: onLikeCardClick   
+            })
+            .build();
+        }
     }, '.elements');
 
     function onAddElementFormSubmit(newPlace) {
