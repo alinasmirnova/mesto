@@ -1,7 +1,7 @@
 class Api {
     constructor({baseUri, authToken}) {
-        this.baseUri = baseUri;
-        this.authToken = authToken;
+        this._baseUri = baseUri;
+        this._authToken = authToken;
     }
 
     getUserInfo() {
@@ -12,18 +12,43 @@ class Api {
         return this._get('cards');
     }
 
+    setUserInfo({name, about}) {
+        return this._patch('users/me', {
+            name: name,
+            about: about
+        });
+    }
+
     _get(subPath) {
-        return fetch(`${this.baseUri}/${subPath}`, {
+        return this._getJson(fetch(this._buildUri(subPath), {
             headers: {
-                authorization: this.authToken
+                authorization: this._authToken
             }
-        })
-        .then(res => {
+        }));   
+    }
+
+    _patch(subPath, body) {
+        return this._getJson(fetch(this._buildUri(subPath), {
+            method: 'PATCH',
+            headers: {
+                authorization: this._authToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }));
+    }
+
+    _buildUri(subPath) {
+        return `${this._baseUri}/${subPath}`;
+    }
+
+    _getJson(promiss) {
+        return promiss.then(res => {
             if (res.ok)
                 return res.json();
 
             return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        });
     }
 }
 

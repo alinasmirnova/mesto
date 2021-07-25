@@ -38,8 +38,12 @@ api.getUserInfo()
     }
 
     function onEditProfileFormSubmit(newUserInfo) {
-        userInfo.setUserInfo(newUserInfo);
-        profileInfoPopup.close();    
+        api.setUserInfo(newUserInfo)
+        .then(newInfo => {
+            userInfo.setUserInfo(newInfo);
+            profileInfoPopup.close();
+        })
+        .catch(onApiError);        
     }
 
     addOnClickAction('.profile__edit-button', openProfileInfoPopup);
