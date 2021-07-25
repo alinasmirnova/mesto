@@ -28,7 +28,8 @@ function getCardsOrderedByCreationDate(cards) {
         return {
             name: card.name,
             link: card.link,
-            createdAt: Date.parse(card.createdAt)
+            createdAt: Date.parse(card.createdAt),
+            likes: card.likes
         }
     })
     .sort((card1, card2) => {
