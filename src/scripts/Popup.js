@@ -4,6 +4,7 @@ class Popup {
     constructor(popupSelector) {
         this._openPopupClass = 'popup_opened';
         this._popup = document.querySelector(popupSelector);
+        this._popup.classList.add('popup_loaded');
         this._onEscClose = this._handleEscClose.bind(this);         
     }
 
