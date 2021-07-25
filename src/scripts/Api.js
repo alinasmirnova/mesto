@@ -26,6 +26,10 @@ class Api {
         })
     }
 
+    deleteCard(id) {
+        return this._delete(`cards/${id}`);
+    }
+
     _get(subPath) {
         return this._getJson(fetch(this._buildUri(subPath), {
             headers: {
@@ -53,6 +57,15 @@ class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
+        }));
+    }
+
+    _delete(subPath) {
+        return this._getJson(fetch(this._buildUri(subPath), {
+            method: 'DELETE',
+            headers: {
+                authorization: this._authToken,
+            }
         }));
     }
 

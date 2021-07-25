@@ -2,7 +2,7 @@ class Card {
     constructor(data, template, {onClick, onDeleteClick}) {
         this._imageLink = data.link;
         this._title = data.name;
-        this._id = data.id;
+        this.id = data.id;
         this._likes = data.likes;
         this._deleteEnabled = data.deleteEnabled;
         

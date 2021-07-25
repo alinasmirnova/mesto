@@ -19,8 +19,11 @@ const submitPopup = new SubmitPopup('.popup_type_submit');
 
 function onDeleteCardClick(card) {
     submitPopup.open(() => {
-        card.remove()
-        submitPopup.close();
+        api.deleteCard(card.id).then(() => {
+            card.remove()
+        })
+        .catch(onApiError)
+        .finally(() => submitPopup.close());
     });
 }
 
@@ -49,7 +52,8 @@ function getCardData(card, userInfo){
         link: card.link,
         createdAt: Date.parse(card.createdAt),
         likes: card.likes,
-        deleteEnabled: card.owner._id === userInfo.id
+        deleteEnabled: card.owner._id === userInfo.id,
+        id: card._id
     }
 }
 
