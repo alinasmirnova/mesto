@@ -1,7 +1,7 @@
 import FormValidator from "./FormValidator.js";
 import Card from "./Card.js";
 import Section from "./Section.js";
-import { validationSettings, initialElements, elementTemplate } from "./constants.js";
+import { validationSettings, elementTemplate } from "./constants.js";
 import '../pages/index.css';
 
 import PopupWithImage from "./PopupWithImage.js";
@@ -20,27 +20,6 @@ const userInfoSelectors = {
     avatarSelector: '.profile__avatar'
 }
 
-const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
-const addElementForm = document.forms['add-element'];
-const addElementValidator = new FormValidator(validationSettings, addElementForm);
-
-const popupWithImage = new PopupWithImage('.popup_type_element-preview');
-const elementsSection = new Section({
-    items: initialElements,
-    renderer: (data) => new Card(data, elementTemplate, (name, link) => popupWithImage.open(name, link)).build()
-}, '.elements');
-
-
-function openElementInfoPopup() {
-    addElementValidator.clearValidations();
-    elementInfoPopup.open();
-}
-
-function onAddElementFormSubmit(newPlace) {
-    elementsSection.addItem(newPlace);
-    elementInfoPopup.close();
-}
-
 function addOnClickAction(selector, onClick) {
     const editProfileButton = document.querySelector(selector);
     editProfileButton.addEventListener('click', onClick);
@@ -49,8 +28,6 @@ function addOnClickAction(selector, onClick) {
 function onApiError(err) {
     console.log(err)
 }
-
-addOnClickAction('.profile__add-button', openElementInfoPopup);
 
 api.getUserInfo()
 .then(userInfo => {
@@ -76,6 +53,30 @@ api.getUserInfo()
 })
 .catch(onApiError);
 
-addElementValidator.enableValidations();
+api.getInitialCards()
+.then(cards => {
+    const addElementForm = document.forms['add-element'];
+    const addElementValidator = new FormValidator(validationSettings, addElementForm);
 
-elementsSection.render();
+    const popupWithImage = new PopupWithImage('.popup_type_element-preview');
+    const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
+
+    const elementsSection = new Section({
+        items: cards,
+        renderer: (data) => new Card(data, elementTemplate, (name, link) => popupWithImage.open(name, link)).build()
+    }, '.elements');
+
+    function onAddElementFormSubmit(newPlace) {
+        elementsSection.addItem(newPlace);
+        elementInfoPopup.close();
+    }
+
+    function openElementInfoPopup() {
+        addElementValidator.clearValidations();
+        elementInfoPopup.open();
+    }
+
+    addOnClickAction('.profile__add-button', openElementInfoPopup);
+    addElementValidator.enableValidations();
+    elementsSection.render();
+});
