@@ -23,6 +23,23 @@ function onApiError(err) {
     console.log(err)
 }
 
+function getCardsOrderedByCreationDate(cards) {
+    return cards.map(card => {
+        return {
+            name: card.name,
+            link: card.link,
+            createdAt: Date.parse(card.createdAt)
+        }
+    })
+    .sort((card1, card2) => {
+        if (card1.createdAt < card2.createdAt)
+            return -1;
+        if (card1.createdAt > card2.createdAt)
+            return 1;
+        return 0;
+    });
+}
+
 api.getUserInfo()
 .then(userInfo => {
     return new UserInfo(userInfo, userInfoSelectors)
@@ -60,7 +77,7 @@ api.getInitialCards()
     const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
 
     const elementsSection = new Section({
-        items: cards,
+        items: getCardsOrderedByCreationDate(cards),
         renderer: (data) => new Card(data, elementTemplate, (name, link) => popupWithImage.open(name, link)).build()
     }, '.elements');
 
