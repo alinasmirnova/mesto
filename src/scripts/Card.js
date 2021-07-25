@@ -1,5 +1,5 @@
 class Card {
-    constructor(data, template, onClick) {
+    constructor(data, template, {onClick, onDeleteClick}) {
         this._imageLink = data.link;
         this._title = data.name;
         this._id = data.id;
@@ -7,6 +7,7 @@ class Card {
         
         this._template = template;
         this._onClick = onClick;
+        this._onDeleteClick = onDeleteClick;
     }
 
     build() {
@@ -31,7 +32,7 @@ class Card {
 
     _setEventListeners() {
         this._card.querySelector('.element__like').addEventListener('click', this._toggleLike);
-        this._card.querySelector('.element__delete').addEventListener('click', () => this._remove());
+        this._card.querySelector('.element__delete').addEventListener('click', () => this._onDeleteClick(this));
         this._image.addEventListener('click', () => this._onClick(this._title, this._imageLink));
     }
 
@@ -39,7 +40,7 @@ class Card {
         evt.target.classList.toggle('like__button_active');
     }
     
-    _remove() {
+    remove() {
         this._card.remove();
         this._card = null;
     }

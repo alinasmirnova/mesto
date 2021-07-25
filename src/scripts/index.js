@@ -8,6 +8,7 @@ import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
 import UserInfo from "./UserInfo.js";
 import Api from "./Api.js"
+import SubmitPopup from "./SubmitPopup.js";
 
 const api = new Api({ 
     baseUri: 'https://nomoreparties.co/v1/cohort-26', 
@@ -76,10 +77,22 @@ api.getInitialCards()
 
     const popupWithImage = new PopupWithImage('.popup_type_element-preview');
     const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
+    
+    const submitPopup = new SubmitPopup('.popup_type_submit');
+
+    function onDeleteCardClick(card) {
+        submitPopup.open(() => {
+            card.remove()
+            submitPopup.close();
+        });
+    }    
 
     const elementsSection = new Section({
         items: getCardsOrderedByCreationDate(cards),
-        renderer: (data) => new Card(data, elementTemplate, (name, link) => popupWithImage.open(name, link)).build()
+        renderer: (data) => new Card(data, elementTemplate, {
+            onClick: (name, link) => popupWithImage.open(name, link),
+            onDeleteClick: onDeleteCardClick
+        }).build()
     }, '.elements');
 
     function onAddElementFormSubmit(newPlace) {
@@ -99,4 +112,5 @@ api.getInitialCards()
     addOnClickAction('.profile__add-button', openElementInfoPopup);
     addElementValidator.enableValidations();
     elementsSection.render();
-});
+})
+.catch(onApiError);

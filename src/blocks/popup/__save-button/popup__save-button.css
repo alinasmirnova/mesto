@@ -9,7 +9,7 @@
     text-align: center;
     border: 0;
     padding: 14px 124px 18px;
-    margin-top: 18px;
+    margin-top: 38px;
     transition: opacity 0.5s;
     cursor: pointer;
 }
@@ -20,7 +20,7 @@
 
 @media (max-width: 616px) {
     .popup__save-button {
-        margin-top: 15px;
+        margin-top: 45px;
         font-size: 14px;
         line-height: 17px;
         padding: 14px 82px 18px;

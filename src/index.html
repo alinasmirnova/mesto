@@ -30,14 +30,17 @@
         <section class="popup popup_type_profile-info">
             <form class="popup__container form popup__content" name="profile-info" novalidate>
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <div class="popup__text-field">
-                    <input type="text" name="name" id="profile-name" class="form__input" placeholder="Имя" minlength="2" maxlength="40" required>
-                    <span class="form__input-error profile-name-error"></span>
-                </div>
-                <div class="popup__text-field">
-                    <input type="text" name="about" id="profile-about" class="form__input" placeholder="О себе" minlength="2" maxlength="200" required>
-                    <span class="form__input-error profile-about-error"></span>
-                </div>
+
+                <div class="popup__fields-container">
+                    <div class="popup__text-field">
+                        <input type="text" name="name" id="profile-name" class="form__input" placeholder="Имя" minlength="2" maxlength="40" required>
+                        <span class="form__input-error profile-name-error"></span>
+                    </div>
+                    <div class="popup__text-field">
+                        <input type="text" name="about" id="profile-about" class="form__input" placeholder="О себе" minlength="2" maxlength="200" required>
+                        <span class="form__input-error profile-about-error"></span>
+                    </div>
+                </div>                
                 
                 <button class="popup__save-button" type="submit">Сохранить</button>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
@@ -46,14 +49,17 @@
         <section class="popup popup_type_element-info">
             <form class="popup__container form popup__content" name="add-element" novalidate>
                 <h2 class="popup__title">Новое место</h2>
-                <div class="popup__text-field">
-                    <input type="text" name="name" id="element-name" class="form__input" placeholder="Название" minlength="2" maxlength="30" required>
-                    <span class="form__input-error element-name-error"></span>
-                </div>
-                <div class="popup__text-field">
-                    <input type="url" name="link" id="element-link" class="form__input" placeholder="Ссылка на картинку" required>
-                    <span class="form__input-error element-link-error"></span>
-                </div>               
+
+                <div class="popup__fields-container">
+                    <div class="popup__text-field">
+                        <input type="text" name="name" id="element-name" class="form__input" placeholder="Название" minlength="2" maxlength="30" required>
+                        <span class="form__input-error element-name-error"></span>
+                    </div>
+                    <div class="popup__text-field">
+                        <input type="url" name="link" id="element-link" class="form__input" placeholder="Ссылка на картинку" required>
+                        <span class="form__input-error element-link-error"></span>
+                    </div> 
+                </div>             
                 
                 <button class="popup__save-button" type="submit">Создать</button>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
@@ -65,6 +71,13 @@
                 <p class="preview__title"></p>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
             </div>
+        </section>
+        <section class="popup popup_type_submit">
+            <form class="popup__container form popup__content">
+                <h2 class="popup__title">Вы уверены?</h2>
+                <button class="popup__save-button" type="submit">Да</button>
+                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+            </form>
         </section>
     </div>
     <template id="element-template">

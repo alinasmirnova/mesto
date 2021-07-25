@@ -2,3 +2,7 @@
     margin: 0 0 30px;
     position: relative;    
 }
+
+.popup__text-field:last-child {
+    margin: 0;
+}

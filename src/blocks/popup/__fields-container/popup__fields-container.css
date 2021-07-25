@@ -1,0 +1,10 @@
+.popup__fields-container {
+    margin: 54px 0 10px;
+}
+
+
+@media (max-width: 616px) {
+    .popup__fields-container {
+        margin: 75px 0 0;
+    }
+}
