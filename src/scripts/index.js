@@ -51,7 +51,8 @@ function getCardData(card, userInfo){
         name: card.name,
         link: card.link,
         createdAt: Date.parse(card.createdAt),
-        likes: card.likes,
+        likesCount: card.likes.length,
+        likeIsActive: card.likes.some(l => l.id ===  userInfo.id),
         deleteEnabled: card.owner._id === userInfo.id,
         id: card._id
     }
