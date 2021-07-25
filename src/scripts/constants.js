@@ -10,4 +10,10 @@ const elementTemplate = document.querySelector('#element-template');
 
 const escapeKey = 'Escape';
 
-export {validationSettings, elementTemplate, escapeKey};
+const userInfoSelectors = {
+    nameFieldSelector: '.profile__name',
+    aboutFieldSelector: '.profile__about',
+    avatarSelector: '.profile__avatar'
+}
+
+export {validationSettings, elementTemplate, escapeKey, userInfoSelectors};

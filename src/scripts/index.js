@@ -1,7 +1,7 @@
 import FormValidator from "./FormValidator.js";
 import Card from "./Card.js";
 import Section from "./Section.js";
-import { validationSettings, elementTemplate } from "./constants.js";
+import { validationSettings, elementTemplate, userInfoSelectors } from "./constants.js";
 import '../pages/index.css';
 
 import PopupWithImage from "./PopupWithImage.js";
@@ -13,12 +13,6 @@ const api = new Api({
     baseUri: 'https://nomoreparties.co/v1/cohort-26', 
     authToken: 'e9c41e78-4da5-45a9-a519-987aa0bd1bef'
 });
-
-const userInfoSelectors = {
-    nameFieldSelector: '.profile__name',
-    aboutFieldSelector: '.profile__about',
-    avatarSelector: '.profile__avatar'
-}
 
 function addOnClickAction(selector, onClick) {
     const editProfileButton = document.querySelector(selector);
