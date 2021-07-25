@@ -15,6 +15,15 @@ const api = new Api({
     authToken: 'e9c41e78-4da5-45a9-a519-987aa0bd1bef'
 });
 
+const submitPopup = new SubmitPopup('.popup_type_submit');
+
+function onDeleteCardClick(card) {
+    submitPopup.open(() => {
+        card.remove()
+        submitPopup.close();
+    });
+} 
+
 function addOnClickAction(selector, onClick) {
     const editProfileButton = document.querySelector(selector);
     editProfileButton.addEventListener('click', onClick);
@@ -78,15 +87,6 @@ api.getInitialCards()
     const popupWithImage = new PopupWithImage('.popup_type_element-preview');
     const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
     
-    const submitPopup = new SubmitPopup('.popup_type_submit');
-
-    function onDeleteCardClick(card) {
-        submitPopup.open(() => {
-            card.remove()
-            submitPopup.close();
-        });
-    }    
-
     const elementsSection = new Section({
         items: getCardsOrderedByCreationDate(cards),
         renderer: (data) => new Card(data, elementTemplate, {

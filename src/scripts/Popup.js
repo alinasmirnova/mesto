@@ -3,12 +3,15 @@ import { escapeKey } from './constants.js'
 class Popup {
     constructor(popupSelector) {
         this._openPopupClass = 'popup_opened';
+        this._popupLoadedClass = 'popup_loaded';
         this._popup = document.querySelector(popupSelector);
-        this._popup.classList.add('popup_loaded');
         this._onEscClose = this._handleEscClose.bind(this);         
     }
 
     open() {
+        if (!this._popup.classList.contains(this._popupLoadedClass))
+            this._popup.classList.add(this._popupLoadedClass);
+
         if (!this._popup.classList.contains(this._openPopupClass)) {
             this._popup.classList.add(this._openPopupClass);
             this._enableClosePopupOnEsc();
