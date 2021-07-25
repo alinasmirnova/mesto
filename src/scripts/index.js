@@ -65,8 +65,12 @@ api.getInitialCards()
     }, '.elements');
 
     function onAddElementFormSubmit(newPlace) {
-        elementsSection.addItem(newPlace);
-        elementInfoPopup.close();
+        api.createCard(newPlace)
+        .then(newCard => {
+            elementsSection.addItem(newCard);
+            elementInfoPopup.close();
+        })
+        .catch(onApiError);    
     }
 
     function openElementInfoPopup() {

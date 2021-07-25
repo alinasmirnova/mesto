@@ -19,6 +19,13 @@ class Api {
         });
     }
 
+    createCard({name, link}) {
+        return this._post('cards', {
+            name: name,
+            link: link
+        })
+    }
+
     _get(subPath) {
         return this._getJson(fetch(this._buildUri(subPath), {
             headers: {
@@ -30,6 +37,17 @@ class Api {
     _patch(subPath, body) {
         return this._getJson(fetch(this._buildUri(subPath), {
             method: 'PATCH',
+            headers: {
+                authorization: this._authToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }));
+    }
+
+    _post(subPath, body) {
+        return this._getJson(fetch(this._buildUri(subPath), {
+            method: 'POST',
             headers: {
                 authorization: this._authToken,
                 'Content-Type': 'application/json'
