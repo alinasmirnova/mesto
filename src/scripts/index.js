@@ -46,10 +46,12 @@ function onApiError(err) {
 
 function orderedByCreationDate(cards) {
     return cards.sort((card1, card2) => {
-        if (card1.createdAt < card2.createdAt)
+        if (card1.createdAt < card2.createdAt) {
             return -1;
-        if (card1.createdAt > card2.createdAt)
+        }
+        if (card1.createdAt > card2.createdAt) {
             return 1;
+        }
         return 0;
     });
 }

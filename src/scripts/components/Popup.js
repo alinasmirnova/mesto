@@ -9,8 +9,9 @@ class Popup {
     }
 
     open() {
-        if (!this._popup.classList.contains(this._popupLoadedClass))
+        if (!this._popup.classList.contains(this._popupLoadedClass)) {
             this._popup.classList.add(this._popupLoadedClass);
+        }
 
         if (!this._popup.classList.contains(this._openPopupClass)) {
             this._popup.classList.add(this._openPopupClass);
@@ -35,7 +36,7 @@ class Popup {
     }
 
     _handleEscClose(evt) {
-        if(evt.key === escapeKey){
+        if(evt.key === escapeKey) {
             evt.preventDefault();
             this.close();
         }

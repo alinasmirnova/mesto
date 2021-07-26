@@ -41,7 +41,7 @@ class PopupWithForm extends Popup {
     }
 
     open(values) {
-        if(values) {
+        if (values) {
             this._setInputValues(values);
         }
         super.open();

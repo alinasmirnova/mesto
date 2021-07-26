@@ -100,8 +100,9 @@ class Api {
 
     _getJson(promiss) {
         return promiss.then(res => {
-            if (res.ok)
+            if (res.ok) {
                 return res.json();
+            }
 
             return Promise.reject(`Ошибка: ${res.status}`);
         });

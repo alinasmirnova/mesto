@@ -46,8 +46,9 @@ class Card {
         this._card.querySelector('.element__like').addEventListener('click', () => this._onLikeClick(this));
         this._image.addEventListener('click', () => this._onClick(this._title, this._imageLink));
 
-        if (this._deleteEnabled)
+        if (this._deleteEnabled) {
             this._card.querySelector('.element__delete').addEventListener('click', () => this._onDeleteClick(this));    
+        }
     }
 
     toggleLike(){
