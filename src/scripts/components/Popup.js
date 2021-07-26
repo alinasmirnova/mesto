@@ -1,4 +1,4 @@
-import { escapeKey } from './constants.js'
+import { escapeKey } from '../constants.js'
 
 class Popup {
     constructor(popupSelector) {

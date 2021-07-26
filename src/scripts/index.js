@@ -1,14 +1,14 @@
-import FormValidator from "./FormValidator.js";
-import Card from "./Card.js";
-import Section from "./Section.js";
+import FormValidator from "./components/FormValidator.js";
+import Card from "./components/Card.js";
+import Section from "./components/Section.js";
 import { validationSettings, elementTemplate, userInfoSelectors } from "./constants.js";
 import '../pages/index.css';
 
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
-import Api from "./Api.js"
-import SubmitPopup from "./SubmitPopup.js";
+import PopupWithImage from "./components/PopupWithImage.js";
+import PopupWithForm from "./components/PopupWithForm.js";
+import UserInfo from "./components/UserInfo.js";
+import Api from "./components/Api.js"
+import SubmitPopup from "./components/SubmitPopup.js";
 
 const api = new Api({ 
     baseUri: 'https://nomoreparties.co/v1/cohort-26', 
