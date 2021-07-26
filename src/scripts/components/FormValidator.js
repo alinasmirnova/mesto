@@ -48,11 +48,13 @@ class FormValidator {
     }
     
     _getValidationMessage(input) {
-        if (input.validity.valueMissing)
+        if (input.validity.valueMissing) {
             return 'Вы пропустили это поле';
+        }
     
-        if (input.validity.typeMismatch && input.type === 'url')
+        if (input.validity.typeMismatch && input.type === 'url') {
             return 'Введите адрес сайта';    
+        }
         
         return input.validationMessage;
     }
@@ -62,7 +64,7 @@ class FormValidator {
     }
     
     _updateSubmitButtonState() {
-        if (this._hasErrors()){
+        if (this._hasErrors()) {
             this._submitButton.classList.add(this._inactiveButtonClass);
             this._submitButton.disabled = true;
         }
