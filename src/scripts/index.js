@@ -17,6 +17,8 @@ const api = new Api({
 
 const submitPopup = new SubmitPopup('.popup_type_submit');
 
+const disableSubmitButtonClass = validationSettings.inactiveButtonClass;
+
 function onDeleteCardClick(card) {
     submitPopup.open(() => {
         api.deleteCard(card.id).then(() => {
@@ -77,7 +79,7 @@ userInfoPromise
 .then(userInfo => {
     const profileInfoForm = document.forms['profile-info'];
     const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
-    const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
+    const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', disableSubmitButtonClass, onEditProfileFormSubmit);
 
     function openProfileInfoPopup() {
         profileInfoPopup.open(userInfo.getUserInfo());
@@ -101,7 +103,7 @@ userInfoPromise
 .then(userInfo => {
     const avatarInfoForm = document.forms['avatar'];
     const avatarValidator = new FormValidator(validationSettings, avatarInfoForm);
-    const avatarPopup = new PopupWithForm('.popup_type_avatar', onEditAvatarFormSubmit);
+    const avatarPopup = new PopupWithForm('.popup_type_avatar', disableSubmitButtonClass, onEditAvatarFormSubmit);
 
     function openAvatarPopup() {
         avatarPopup.open(userInfo.getAvatar());
@@ -140,7 +142,7 @@ Promise.all([userInfoPromise, cardsPromise])
     const addElementValidator = new FormValidator(validationSettings, addElementForm);
 
     const popupWithImage = new PopupWithImage('.popup_type_element-preview');
-    const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
+    const elementInfoPopup = new PopupWithForm('.popup_type_element-info', disableSubmitButtonClass, onAddElementFormSubmit);
     
     const elementsSection = new Section({
         items: orderedByCreationDate(cards),
