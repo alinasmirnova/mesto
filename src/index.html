@@ -13,7 +13,11 @@
         </header>
         <main>
             <section class="profile">
-                <img src="" class="profile__avatar" alt="Ваше фото">
+                <div class="profile__avatar avatar">
+                    <img src="" class="avatar__image" alt="Ваше фото">
+                    <button class="avatar__edit-button" type="button"></button>
+                </div>
+                
                 <div class="profile__profile-info">
                     <h1 class="profile__name"></h1>
                     <button class="profile__edit-button root-button" type="button" aria-label="Редактировать"></button>
@@ -73,9 +77,24 @@
             </div>
         </section>
         <section class="popup popup_type_submit">
-            <form class="popup__container form popup__content">
+            <form class="popup__container form popup__content" name="submit-form">
                 <h2 class="popup__title">Вы уверены?</h2>
                 <button class="popup__save-button" type="submit">Да</button>
+                <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+            </form>
+        </section>
+        <section class="popup popup_type_avatar">
+            <form class="popup__container form popup__content" name="avatar" novalidate>
+                <h2 class="popup__title">Обновить аватар</h2>
+
+                <div class="popup__fields-container">
+                    <div class="popup__text-field">
+                        <input type="url" name="avatar" id="avatar" class="form__input" placeholder="Ссылка на картинку" required>
+                        <span class="form__input-error avatar-error"></span>
+                    </div> 
+                </div>             
+                
+                <button class="popup__save-button" type="submit">Сохранить</button>
                 <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
             </form>
         </section>

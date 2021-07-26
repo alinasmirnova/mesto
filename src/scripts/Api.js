@@ -19,6 +19,13 @@ class Api {
         });
     }
 
+    setAvatar({avatar}) {
+        return this._patch('users/me/avatar', {
+            avatar: avatar
+        });
+    }
+
+
     createCard({name, link}) {
         return this._post('cards', {
             name: name,

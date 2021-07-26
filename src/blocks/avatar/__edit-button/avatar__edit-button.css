@@ -1,0 +1,22 @@
+.avatar__edit-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    z-index: 1;
+    padding: 0;
+    transition: background-color 0.5s;
+}
+
+.avatar__edit-button:hover {
+    background-image: url(../../../images/edit-avatar-icon.svg);
+    background-color: rgba(0, 0, 0, 0.75);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 26px;
+}

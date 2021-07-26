@@ -13,7 +13,7 @@ const escapeKey = 'Escape';
 const userInfoSelectors = {
     nameFieldSelector: '.profile__name',
     aboutFieldSelector: '.profile__about',
-    avatarSelector: '.profile__avatar'
+    avatarSelector: '.avatar__image'
 }
 
 export {validationSettings, elementTemplate, escapeKey, userInfoSelectors};

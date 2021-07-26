@@ -77,6 +77,10 @@ userInfoPromise
     const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
     const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
 
+    const avatarInfoForm = document.forms['avatar'];
+    const avatarValidator = new FormValidator(validationSettings, avatarInfoForm);
+    const avatarPopup = new PopupWithForm('.popup_type_avatar', onEditAvatarFormSubmit);
+
     function openProfileInfoPopup() {
         profileInfoPopup.open(userInfo.getUserInfo());
         profileInfoValidator.clearValidations();
@@ -91,8 +95,24 @@ userInfoPromise
         .finally(() => profileInfoPopup.close());        
     }
 
+    function openAvatarPopup() {
+        avatarPopup.open(userInfo.getAvatar());
+        avatarValidator.clearValidations();
+    }
+
+    function onEditAvatarFormSubmit(newAvatar) {
+        api.setAvatar(newAvatar)
+        .then(newAvatar => {
+            userInfo.setAvatar(newAvatar);            
+        })
+        .catch(onApiError)
+        .finally(() => avatarPopup.close());        
+    }
+
     addOnClickAction('.profile__edit-button', openProfileInfoPopup);
+    addOnClickAction('.avatar__edit-button', openAvatarPopup);
     profileInfoValidator.enableValidations();
+    avatarValidator.enableValidations();
 })
 .catch(onApiError);
 

@@ -1,0 +1,10 @@
+.avatar__image {
+    object-fit: cover;
+    background-position: center;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    position: absolute;
+    left: 0;
+    top: 0;
+}

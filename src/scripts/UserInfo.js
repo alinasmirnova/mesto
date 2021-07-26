@@ -22,7 +22,9 @@ class UserInfo {
     }
 
     getAvatar() {
-        return this._avatarImage.src;
+        return {
+            avatar: this._avatarImage.src
+        };
     }
 
     setAvatar({avatar}) {
