@@ -77,10 +77,6 @@ userInfoPromise
     const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
     const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
 
-    const avatarInfoForm = document.forms['avatar'];
-    const avatarValidator = new FormValidator(validationSettings, avatarInfoForm);
-    const avatarPopup = new PopupWithForm('.popup_type_avatar', onEditAvatarFormSubmit);
-
     function openProfileInfoPopup() {
         profileInfoPopup.open(userInfo.getUserInfo());
         profileInfoValidator.clearValidations();
@@ -93,7 +89,17 @@ userInfoPromise
         })
         .catch(onApiError)
         .finally(() => profileInfoPopup.close());        
-    }
+    }   
+
+    addOnClickAction('.profile__edit-button', openProfileInfoPopup);
+    profileInfoValidator.enableValidations();
+    
+    return userInfo;
+})
+.then(userInfo => {
+    const avatarInfoForm = document.forms['avatar'];
+    const avatarValidator = new FormValidator(validationSettings, avatarInfoForm);
+    const avatarPopup = new PopupWithForm('.popup_type_avatar', onEditAvatarFormSubmit);
 
     function openAvatarPopup() {
         avatarPopup.open(userInfo.getAvatar());
@@ -109,10 +115,10 @@ userInfoPromise
         .finally(() => avatarPopup.close());        
     }
 
-    addOnClickAction('.profile__edit-button', openProfileInfoPopup);
     addOnClickAction('.avatar__edit-button', openAvatarPopup);
-    profileInfoValidator.enableValidations();
     avatarValidator.enableValidations();
+
+    return userInfo;
 });
 
 const cardsPromise = api.getInitialCards();
