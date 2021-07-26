@@ -113,8 +113,7 @@ userInfoPromise
     addOnClickAction('.avatar__edit-button', openAvatarPopup);
     profileInfoValidator.enableValidations();
     avatarValidator.enableValidations();
-})
-.catch(onApiError);
+});
 
 const cardsPromise = api.getInitialCards();
 
