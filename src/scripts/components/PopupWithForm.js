@@ -1,14 +1,13 @@
 import Popup from "./Popup.js";
 
 class PopupWithForm extends Popup {
-    constructor(popupSelector, disableSubmitButtonClass, onFormSubmit) {
+    constructor(popupSelector, onFormSubmit) {
         super(popupSelector);
         this._onFormSubmit = onFormSubmit;  
         this._form = this._popup.querySelector('.form');
         this.setEventListeners();
         this._submitButton = this._popup.querySelector('.popup__save-button');   
         this._submitButtonInitialText = this._submitButton.textContent;
-        this._disableSubmitButtonClass = disableSubmitButtonClass;
     }
 
     _getInputValues() {
@@ -30,7 +29,7 @@ class PopupWithForm extends Popup {
         super.setEventListeners();
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._disableSubmitButton();
+            this._setSubmitButtonText('Сохранение...');
             this._onFormSubmit(this._getInputValues());            
         }); 
     }
@@ -38,7 +37,7 @@ class PopupWithForm extends Popup {
     close() {
         super.close();
         this._form.reset();
-        this._enableSubmitButton();
+        this._setSubmitButtonText(this._submitButtonInitialText);
     }
 
     open(values) {
@@ -48,16 +47,8 @@ class PopupWithForm extends Popup {
         super.open();
     }
 
-    _disableSubmitButton() {
-        this._submitButton.classList.add(this._disableSubmitButtonClass);
-        this._submitButton.textContent = 'Сохранение...';
-        this._submitButton.disabled = true;
-    }
-
-    _enableSubmitButton() {
-        this._submitButton.classList.remove(this._disableSubmitButtonClass);
-        this._submitButton.textContent = this._submitButtonInitialText;
-        this._submitButton.disabled = false;
+    _setSubmitButtonText(text) {
+        this._submitButton.textContent = text;
     }
 }
 

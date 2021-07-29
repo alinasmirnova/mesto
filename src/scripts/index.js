@@ -17,8 +17,6 @@ const api = new Api({
 
 const submitPopup = new SubmitPopup('.popup_type_submit');
 
-const disableSubmitButtonClass = validationSettings.inactiveButtonClass;
-
 function onDeleteCardClick(card) {
     submitPopup.open(() => {
         api.deleteCard(card.id).then(() => {
@@ -79,7 +77,7 @@ userInfoPromise
 .then(userInfo => {
     const profileInfoForm = document.forms['profile-info'];
     const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
-    const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', disableSubmitButtonClass, onEditProfileFormSubmit);
+    const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
 
     function openProfileInfoPopup() {
         profileInfoPopup.open(userInfo.getUserInfo());
@@ -87,12 +85,17 @@ userInfoPromise
     }
 
     function onEditProfileFormSubmit(newUserInfo) {
+        profileInfoValidator.disableSubmitButton();
+
         api.setUserInfo(newUserInfo)
         .then(newInfo => {
             userInfo.setUserInfo(newInfo);            
         })
         .catch(onApiError)
-        .finally(() => profileInfoPopup.close());        
+        .finally(() => {
+            profileInfoPopup.close();
+            profileInfoValidator.enableSubmitButton();
+        });        
     }   
 
     addOnClickAction('.profile__edit-button', openProfileInfoPopup);
@@ -103,7 +106,7 @@ userInfoPromise
 .then(userInfo => {
     const avatarInfoForm = document.forms['avatar'];
     const avatarValidator = new FormValidator(validationSettings, avatarInfoForm);
-    const avatarPopup = new PopupWithForm('.popup_type_avatar', disableSubmitButtonClass, onEditAvatarFormSubmit);
+    const avatarPopup = new PopupWithForm('.popup_type_avatar', onEditAvatarFormSubmit);
 
     function openAvatarPopup() {
         avatarPopup.open(userInfo.getAvatar());
@@ -111,12 +114,17 @@ userInfoPromise
     }
 
     function onEditAvatarFormSubmit(newAvatar) {
+        avatarValidator.disableSubmitButton();
+
         api.setAvatar(newAvatar)
         .then(newAvatar => {
             userInfo.setAvatar(newAvatar);            
         })
         .catch(onApiError)
-        .finally(() => avatarPopup.close());        
+        .finally(() => {
+            avatarPopup.close();
+            avatarValidator.enableSubmitButton();
+        });        
     }
 
     addOnClickAction('.avatar__edit-button', openAvatarPopup);
@@ -142,7 +150,7 @@ Promise.all([userInfoPromise, cardsPromise])
     const addElementValidator = new FormValidator(validationSettings, addElementForm);
 
     const popupWithImage = new PopupWithImage('.popup_type_element-preview');
-    const elementInfoPopup = new PopupWithForm('.popup_type_element-info', disableSubmitButtonClass, onAddElementFormSubmit);
+    const elementInfoPopup = new PopupWithForm('.popup_type_element-info', onAddElementFormSubmit);
     
     const elementsSection = new Section({
         items: orderedByCreationDate(cards),
@@ -157,12 +165,17 @@ Promise.all([userInfoPromise, cardsPromise])
     }, '.elements');
 
     function onAddElementFormSubmit(newPlace) {
+        addElementValidator.disableSubmitButton();
+
         api.createCard(newPlace)
         .then(newCard => {
             elementsSection.addItem(getCardData(newCard, me));    
         })
         .catch(onApiError)
-        .finally(() => elementInfoPopup.close());    
+        .finally(() => {
+            elementInfoPopup.close();
+            addElementValidator.enableSubmitButton();
+        });    
     }
 
     function openElementInfoPopup() {
