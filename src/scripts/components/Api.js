@@ -98,8 +98,8 @@ class Api {
         return `${this._baseUri}/${subPath}`;
     }
 
-    _getJson(promiss) {
-        return promiss.then(res => {
+    _getJson(promise) {
+        return promise.then(res => {
             if (res.ok) {
                 return res.json();
             }
