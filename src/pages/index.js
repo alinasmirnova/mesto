@@ -22,8 +22,8 @@ function onDeleteCardClick(card) {
         api.deleteCard(card.id).then(() => {
             card.remove()
         })
-        .catch(onApiError)
-        .finally(() => submitPopup.close());
+        .then(_ => submitPopup.close())
+        .catch(onApiError);
     });
 }
 
@@ -91,11 +91,9 @@ userInfoPromise
         .then(newInfo => {
             userInfo.setUserInfo(newInfo);            
         })
+        .then(_ => profileInfoPopup.close())
         .catch(onApiError)
-        .finally(() => {
-            profileInfoPopup.close();
-            profileInfoValidator.enableSubmitButton();
-        });        
+        .finally(() => profileInfoValidator.enableSubmitButton());        
     }   
 
     addOnClickAction('.profile__edit-button', openProfileInfoPopup);
@@ -120,11 +118,9 @@ userInfoPromise
         .then(newAvatar => {
             userInfo.setAvatar(newAvatar);            
         })
+        .then(_ => avatarPopup.close())
         .catch(onApiError)
-        .finally(() => {
-            avatarPopup.close();
-            avatarValidator.enableSubmitButton();
-        });        
+        .finally(() => avatarValidator.enableSubmitButton());        
     }
 
     addOnClickAction('.avatar__edit-button', openAvatarPopup);
@@ -171,11 +167,9 @@ Promise.all([userInfoPromise, cardsPromise])
         .then(newCard => {
             elementsSection.addItem(getCardData(newCard, me));    
         })
+        .then(_ => elementInfoPopup.close())
         .catch(onApiError)
-        .finally(() => {
-            elementInfoPopup.close();
-            addElementValidator.enableSubmitButton();
-        });    
+        .finally(() => addElementValidator.enableSubmitButton());    
     }
 
     function openElementInfoPopup() {
