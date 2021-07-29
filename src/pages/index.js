@@ -68,13 +68,18 @@ function getCardData(card, userInfo){
     }
 }
 
-const userInfoPromise = api.getUserInfo()
-.then(userInfo => {
-    return new UserInfo(userInfo, userInfoSelectors)
-});
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+.then (results => {
+    const userInfo = new UserInfo(results[0], userInfoSelectors);
+    const cards = results[1];    
 
-userInfoPromise
-.then(userInfo => {
+    return {
+        cards: cards.map(c => getCardData(c, userInfo)),
+        me: userInfo
+    };
+})
+.then(res => {
+    const userInfo = res.me;
     const profileInfoForm = document.forms['profile-info'];
     const profileInfoValidator = new FormValidator(validationSettings, profileInfoForm);
     const profileInfoPopup = new PopupWithForm('.popup_type_profile-info', onEditProfileFormSubmit);
@@ -99,9 +104,10 @@ userInfoPromise
     addOnClickAction('.profile__edit-button', openProfileInfoPopup);
     profileInfoValidator.enableValidations();
     
-    return userInfo;
+    return res;
 })
-.then(userInfo => {
+.then(res => {
+    const userInfo = res.me;
     const avatarInfoForm = document.forms['avatar'];
     const avatarValidator = new FormValidator(validationSettings, avatarInfoForm);
     const avatarPopup = new PopupWithForm('.popup_type_avatar', onEditAvatarFormSubmit);
@@ -126,20 +132,7 @@ userInfoPromise
     addOnClickAction('.avatar__edit-button', openAvatarPopup);
     avatarValidator.enableValidations();
 
-    return userInfo;
-});
-
-const cardsPromise = api.getInitialCards();
-
-Promise.all([userInfoPromise, cardsPromise])
-.then (results => {
-    const userInfo = results[0];
-    const cards = results[1];    
-
-    return {
-        cards: cards.map(c => getCardData(c, userInfo)),
-        me: userInfo
-    };
+    return res;
 })
 .then(({cards, me}) => {
     const addElementForm = document.forms['add-element'];
